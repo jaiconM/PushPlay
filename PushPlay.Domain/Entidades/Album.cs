@@ -9,6 +9,8 @@
         public int Ano { get; set; }
         public IList<Musica> Musicas { get; set; }
 
+        protected Album() { /* for EF */ }
+
         public Album(string nome, Musica musica)
         {
             Nome = nome;
