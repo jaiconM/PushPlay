@@ -7,6 +7,7 @@ namespace PushPlay.Domain.Entidades
         public int Id { get; set; }
         public int Sequencia { get; set; }
         public string Nome { get; set; }
+        public EstiloMusical EstiloMusical { get; set; }
         public Duracao Duracao { get; set; }
 
     }

@@ -22,5 +22,8 @@ namespace PushPlay.Domain.Entidades
             Nome = nome;
             Albuns = new List<Album> { album };
         }
+
+        public IEnumerable<Musica> ListeMusicas() => Albuns.SelectMany(album => album.Musicas);
+        public IEnumerable<EstiloMusical> ListeEstilosMusiccais() => ListeMusicas().Select(musica => musica.EstiloMusical).Distinct(); 
     }
 }

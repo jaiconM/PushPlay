@@ -10,4 +10,12 @@
     <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.0.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PushPlay.CrossCutting\PushPlay.CrossCutting.csproj" />
+  </ItemGroup>
+
 </Project>
