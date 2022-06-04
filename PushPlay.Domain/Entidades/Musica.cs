@@ -1,11 +1,13 @@
-﻿namespace PushPlay.Domain.Entidades
+﻿using PushPlay.Domain.ValueObjects;
+
+namespace PushPlay.Domain.Entidades
 {
     public class Musica
     {
         public int Id { get; set; }
+        public int Sequencia { get; set; }
         public string Nome { get; set; }
-        public Album Album { get; set; } = new Album();
-        public TimeSpan Duracao { get; set; }
+        public Duracao Duracao { get; set; }
 
     }
 }

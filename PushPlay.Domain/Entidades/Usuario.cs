@@ -4,9 +4,14 @@
     {
         public int Id { get; set; }
         public string Nome { get; set; }
-        public int Login { get; set; }
-        public int Senha { get; set; }
+        public string Email { get; set; }
+        public string Senha { get; set; }
         public string LinkFoto { get; set; }
-        public IEnumerable<PlayList> PlayLists { get; set; } = new List<PlayList>();
+        public IList<PlayList> PlayLists { get; set; }
+        
+        public Usuario()
+        {
+            PlayLists = new List<PlayList>();
+        }
     }
 }

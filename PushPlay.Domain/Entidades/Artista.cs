@@ -9,7 +9,18 @@ namespace PushPlay.Domain.Entidades
         public string Descricao { get; set; }
         public string LinkFoto { get; set; }
         public TipoArtista Tipo { get; set; }
-        public IEnumerable<Album> Albuns { get; set; } = new List<Album>();
-        public IEnumerable<Musica> Musicas => Albuns.SelectMany(album => album.Musicas); 
+        public IList<Album> Albuns { get; set; }
+
+        public Artista(string nome)
+        {
+            Nome = nome;
+            Albuns = new List<Album>();
+        }
+
+        public Artista(string nome, Album album)
+        {
+            Nome = nome;
+            Albuns = new List<Album> { album };
+        }
     }
 }

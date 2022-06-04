@@ -7,8 +7,28 @@
         public string Descricao { get; set; }
         public string LinkFoto { get; set; }
         public int Ano { get; set; }
-        public Artista Artista { get; set; } = new Artista();
-        public IEnumerable<Musica> Musicas { get; set; } = new List<Musica>();
-        public int QuantidadeDeMusicas => Musicas.Count();
+        public IList<Musica> Musicas { get; set; }
+
+        public Album(string nome, Musica musica)
+        {
+            Nome = nome;
+            if (musica == null)
+            {
+                throw new ArgumentNullException("Música obrigatória");
+            }
+            Musicas = new List<Musica> { musica };
+        }
+
+        public Album(string nome, IList<Musica> musicas)
+        {
+            Nome = nome;
+            if (musicas.Any() == false)
+            {
+                throw new ArgumentNullException("Música obrigatória");
+            }
+            Musicas = musicas;
+        }
+
+        public int QuatidadeDeMusicas() => Musicas.Count;
     }
 }
