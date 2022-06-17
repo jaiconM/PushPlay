@@ -1,8 +1,9 @@
-﻿namespace PushPlay.Domain.Entidades
+﻿using PushPlay.CrossCutting.Entity;
+
+namespace PushPlay.Domain.Entidades
 {
-    public class PlayList
+    public class PlayList : Entity<Guid>
     {
-        public int Id { get; set; }
         public string Nome { get; set; }
         public IList<Musica> Musicas { get; set; }
 

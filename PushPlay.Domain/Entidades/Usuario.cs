@@ -1,13 +1,13 @@
 ﻿using FluentValidation;
+using PushPlay.CrossCutting.Entity;
 using PushPlay.CrossCutting.Utils;
 using PushPlay.Domain.ValueObjects;
 using SpotifyLite.Domain.Account.Rules;
 
 namespace PushPlay.Domain.Entidades
 {
-    public class Usuario
+    public class Usuario : Entity<Guid>
     {
-        public int Id { get; set; }
         public string Nome { get; set; }
         public Email Email { get; set; }
         public Senha Senha { get; set; }

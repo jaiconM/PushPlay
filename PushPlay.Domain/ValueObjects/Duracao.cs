@@ -2,13 +2,14 @@
 {
     public class Duracao
     {
-        private int _totalDeSegundos;
+        public int Valor { get; set; }
+        public string ValorFormatado => TimeSpan.FromSeconds(Valor).ToString("HH:mm:ss");
 
-        public Duracao(int totalDeSegundos)
+        protected Duracao() { /* for EF */ }
+
+        public Duracao(int duracaoEmSegundos)
         {
-            _totalDeSegundos = totalDeSegundos;
+            Valor = duracaoEmSegundos;
         }
-
-        public override string ToString() => TimeSpan.FromSeconds(_totalDeSegundos).ToString("HH:mm:ss");
     }
 }

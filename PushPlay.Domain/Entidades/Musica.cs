@@ -1,10 +1,10 @@
-﻿using PushPlay.Domain.ValueObjects;
+﻿using PushPlay.CrossCutting.Entity;
+using PushPlay.Domain.ValueObjects;
 
 namespace PushPlay.Domain.Entidades
 {
-    public class Musica
+    public class Musica : Entity<Guid>
     {
-        public int Id { get; set; }
         public int Sequencia { get; set; }
         public string Nome { get; set; }
         public EstiloMusical EstiloMusical { get; set; }

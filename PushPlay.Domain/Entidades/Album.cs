@@ -1,8 +1,9 @@
-﻿namespace PushPlay.Domain.Entidades
+﻿using PushPlay.CrossCutting.Entity;
+
+namespace PushPlay.Domain.Entidades
 {
-    public class Album
+    public class Album : Entity<Guid>
     {
-        public int Id { get; set; }
         public string Nome { get; set; }
         public string Descricao { get; set; }
         public string LinkFoto { get; set; }
@@ -16,7 +17,7 @@
             Nome = nome;
             if (musica == null)
             {
-                throw new ArgumentNullException("Música obrigatória");
+                throw new ArgumentNullException("Para criar um album, o album deve ter no minimo uma musica");
             }
             Musicas = new List<Musica> { musica };
         }
@@ -26,7 +27,7 @@
             Nome = nome;
             if (musicas.Any() == false)
             {
-                throw new ArgumentNullException("Música obrigatória");
+                throw new ArgumentNullException("Para criar um album, o album deve ter no minimo uma musicaa");
             }
             Musicas = musicas;
         }

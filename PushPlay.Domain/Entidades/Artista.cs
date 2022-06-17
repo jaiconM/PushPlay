@@ -1,15 +1,17 @@
-﻿using PushPlay.Domain.Enums;
+﻿using PushPlay.CrossCutting.Entity;
+using PushPlay.Domain.Enums;
 
 namespace PushPlay.Domain.Entidades
 {
-    public class Artista
+    public class Artista : Entity<Guid>
     {
-        public int Id { get; set; }
         public string Nome { get; set; }
         public string Descricao { get; set; }
         public string LinkFoto { get; set; }
         public TipoArtista Tipo { get; set; }
         public IList<Album> Albuns { get; set; }
+
+        protected Artista() { /* for EF */ }
 
         public Artista(string nome)
         {
