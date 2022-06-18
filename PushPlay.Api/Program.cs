@@ -1,15 +1,13 @@
 using Microsoft.EntityFrameworkCore;
-using PushPlay.Repository.Contexto;
+using PushPlay.Repository.Config;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
 builder.Services.AddControllers();
-builder.Services.AddDbContext<PushPlayContext>(c =>
-{
-    c.UseSqlServer(builder.Configuration.GetConnectionString("PushPlayDBConn"));
-});
+builder.Services.RegisterRepository(builder.Configuration.GetConnectionString("PushPlayDBConn"));
+
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();

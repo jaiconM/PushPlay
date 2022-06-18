@@ -13,6 +13,16 @@ namespace PushPlay.Repository.Mapeamento
 
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
             builder.Property(x => x.Nome).HasMaxLength(200);
+
+            builder.HasData(
+                new EstiloMusical { Id = Guid.NewGuid(), Nome = "Rock" },
+                new EstiloMusical { Id = Guid.NewGuid(), Nome = "Eletrônico" },
+                new EstiloMusical { Id = Guid.NewGuid(), Nome = "Lounge" },
+                new EstiloMusical { Id = Guid.NewGuid(), Nome = "Sertanejo" },
+                new EstiloMusical { Id = Guid.NewGuid(), Nome = "Samba" },
+                new EstiloMusical { Id = Guid.NewGuid(), Nome = "Forró" },
+                new EstiloMusical { Id = Guid.NewGuid(), Nome = "MPB" }
+           );
         }
     }
 }
