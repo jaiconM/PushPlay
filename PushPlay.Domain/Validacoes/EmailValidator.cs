@@ -10,7 +10,7 @@ namespace SpotifyLite.Domain.Account.Rules
 
         public EmailValidator()
         {
-            RuleFor(x => x.Valor)
+            RuleFor(email => email.Valor)
                 .NotEmpty()
                 .Must(BeAEmailValid).WithMessage("Email inválido");
         }

@@ -7,9 +7,9 @@ namespace SpotifyLite.Domain.Account.Rules
     {
         public UsuarioValidator()
         {
-            RuleFor(x => x.Nome).NotEmpty();
-            RuleFor(x => x.Email).SetValidator(new EmailValidator());
-            RuleFor(x => x.Senha).SetValidator(new SenhaValidator());
+            RuleFor(usuario => usuario.Nome).NotEmpty();
+            RuleFor(usuario => usuario.Email).SetValidator(new EmailValidator());
+            RuleFor(usuario => usuario.Senha).SetValidator(new SenhaValidator());
         }
     }
 }

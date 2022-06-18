@@ -10,7 +10,7 @@ namespace SpotifyLite.Domain.Account.Rules
 
         public SenhaValidator()
         {
-            RuleFor(x => x.Valor)
+            RuleFor(senha => senha.Valor)
                 .NotEmpty()
                 .Must(BeValidPassword).WithMessage("A Senha deve ter no mínimo 8 caracteres, uma letra, um caracter especial e um número");
         }
