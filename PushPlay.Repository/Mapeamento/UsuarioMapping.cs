@@ -9,21 +9,21 @@ namespace PushPlay.Repository.Mapeamento
         public void Configure(EntityTypeBuilder<Usuario> builder)
         {
             builder.ToTable("Usuario");
-            builder.HasKey(x => x.Id);
+            builder.HasKey(usuario => usuario.Id);
 
-            builder.Property(x => x.Id).ValueGeneratedOnAdd();
-            builder.Property(x => x.Nome).HasMaxLength(200);
-            builder.Property(x => x.LinkFoto).HasMaxLength(500);
-            builder.OwnsOne(x => x.Email, p =>
+            builder.Property(usuario => usuario.Id).ValueGeneratedOnAdd();
+            builder.Property(usuario => usuario.Nome).HasMaxLength(200);
+            builder.Property(usuario => usuario.LinkFoto).HasMaxLength(500);
+            builder.OwnsOne(usuario => usuario.Email, usuarioEmail =>
             {
-                p.Property(f => f.Valor).HasColumnName("Email").IsRequired();
+                usuarioEmail.Property(email => email.Valor).HasColumnName("Email").IsRequired().HasMaxLength(500);
             });
-            builder.OwnsOne(x => x.Senha, p =>
+            builder.OwnsOne(usuario => usuario.Senha, usuarioSenha =>
             {
-                p.Property(f => f.Valor).HasColumnName("Senha").IsRequired();
+                usuarioSenha.Property(senha => senha.Valor).HasColumnName("Senha").IsRequired().HasMaxLength(500);
             });
-
-            builder.HasMany(x => x.PlayLists).WithOne().OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(usuario => usuario.PlayLists).WithOne().OnDelete(DeleteBehavior.NoAction);
+            builder.HasMany(usuario => usuario.PlayListsQueSegue).WithMany(playlist => playlist.Seguidores);
         }
     }
 }

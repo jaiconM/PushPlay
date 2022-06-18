@@ -9,17 +9,17 @@ namespace PushPlay.Repository.Mapeamento
         public void Configure(EntityTypeBuilder<Musica> builder)
         {
             builder.ToTable("Musica");
-            builder.HasKey(x => x.Id);
+            builder.HasKey(musica => musica.Id);
 
-            builder.Property(x => x.Id).ValueGeneratedOnAdd();
-            builder.Property(x => x.Nome).IsRequired().HasMaxLength(200);
-            builder.Property(x => x.Sequencia).IsRequired();
-            builder.HasOne(x => x.EstiloMusical);
-            builder.HasMany(x => x.PlayLists).WithMany(x => x.Musicas);
+            builder.Property(musica => musica.Id).ValueGeneratedOnAdd();
+            builder.Property(musica => musica.Nome).IsRequired().HasMaxLength(200);
+            builder.Property(musica => musica.Sequencia).IsRequired();
+            builder.HasOne(musica => musica.EstiloMusical);
+            builder.HasMany(musica => musica.PlayLists).WithMany(playlist => playlist.Musicas);
 
-            builder.OwnsOne(x => x.Duracao, p =>
+            builder.OwnsOne(musica => musica.Duracao, musicaDuracao =>
             {
-                p.Property(f => f.Valor).HasColumnName("DuracaoEmSegundos").IsRequired();
+                musicaDuracao.Property(duracao => duracao.Valor).HasColumnName("DuracaoEmSegundos").IsRequired();
             });
         }
     }

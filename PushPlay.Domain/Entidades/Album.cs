@@ -27,7 +27,7 @@ namespace PushPlay.Domain.Entidades
             Nome = nome;
             if (musicas.Any() == false)
             {
-                throw new ArgumentNullException("Para criar um album, o album deve ter no minimo uma musicaa");
+                throw new ArgumentNullException("Para criar um album, o album deve ter no minimo uma musica");
             }
             Musicas = musicas;
         }

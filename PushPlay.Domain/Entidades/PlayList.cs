@@ -6,6 +6,7 @@ namespace PushPlay.Domain.Entidades
     {
         public string Nome { get; set; }
         public IList<Musica> Musicas { get; set; }
+        public IList<Usuario> Seguidores { get; set; }
 
         public PlayList()
         {

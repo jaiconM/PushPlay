@@ -13,6 +13,7 @@ namespace PushPlay.Domain.Entidades
         public Senha Senha { get; set; }
         public string LinkFoto { get; set; }
         public IList<PlayList> PlayLists { get; set; }
+        public IList<PlayList> PlayListsQueSegue { get; set; }
 
         public Usuario()
         {

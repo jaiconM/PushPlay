@@ -42,8 +42,8 @@ namespace PushPlay.Repository.Migrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Nome = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Senha = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
+                    Senha = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false),
                     LinkFoto = table.Column<string>(type: "nvarchar(500)", maxLength: 500, nullable: false)
                 },
                 constraints: table =>
@@ -88,8 +88,7 @@ namespace PushPlay.Repository.Migrations
                         name: "FK_PlayList_Usuario_UsuarioId",
                         column: x => x.UsuarioId,
                         principalTable: "Usuario",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -116,6 +115,30 @@ namespace PushPlay.Repository.Migrations
                         name: "FK_Musica_EstiloMusical_EstiloMusicalId",
                         column: x => x.EstiloMusicalId,
                         principalTable: "EstiloMusical",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PlayListUsuario",
+                columns: table => new
+                {
+                    PlayListsQueSegueId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SeguidoresId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PlayListUsuario", x => new { x.PlayListsQueSegueId, x.SeguidoresId });
+                    table.ForeignKey(
+                        name: "FK_PlayListUsuario_PlayList_PlayListsQueSegueId",
+                        column: x => x.PlayListsQueSegueId,
+                        principalTable: "PlayList",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_PlayListUsuario_Usuario_SeguidoresId",
+                        column: x => x.SeguidoresId,
+                        principalTable: "Usuario",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -149,13 +172,13 @@ namespace PushPlay.Repository.Migrations
                 columns: new[] { "Id", "Nome" },
                 values: new object[,]
                 {
-                    { new Guid("1e726066-ac52-4255-a55e-404442e73b54"), "Sertanejo" },
-                    { new Guid("21ad0e80-47ef-4ce7-9b6e-229f8c03288c"), "MPB" },
-                    { new Guid("55c3512e-1698-4685-a9b2-23723f30f581"), "Rock" },
-                    { new Guid("6f0cd7df-8eeb-4598-a51f-9f18721fdbaf"), "Lounge" },
-                    { new Guid("af98ebf7-8e34-463b-a5a4-612d4cb80be7"), "Forró" },
-                    { new Guid("ca55c97d-7189-4af8-af6c-a73a8148c066"), "Samba" },
-                    { new Guid("f908ba6b-85ff-49e9-821f-b07aca28def2"), "Eletrônico" }
+                    { new Guid("16901d29-6e18-4dec-9676-4250fe03c9f9"), "Sertanejo" },
+                    { new Guid("324cdafb-95df-47d1-afda-47a47a0467da"), "Forró" },
+                    { new Guid("38a4c33c-368f-429c-8b34-aeebc45a9521"), "Lounge" },
+                    { new Guid("71da8f31-6e4d-4653-86e1-31a3e96d02aa"), "Samba" },
+                    { new Guid("726775a2-c47e-40c8-abde-0a6d03c96fb5"), "MPB" },
+                    { new Guid("b7c939aa-8604-46b4-9af2-54b87d2578fa"), "Rock" },
+                    { new Guid("e93cc713-4a9d-4fcd-8a64-e4c3101b5a6c"), "Eletrônico" }
                 });
 
             migrationBuilder.CreateIndex(
@@ -182,12 +205,20 @@ namespace PushPlay.Repository.Migrations
                 name: "IX_PlayList_UsuarioId",
                 table: "PlayList",
                 column: "UsuarioId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_PlayListUsuario_SeguidoresId",
+                table: "PlayListUsuario",
+                column: "SeguidoresId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "MusicaPlayList");
+
+            migrationBuilder.DropTable(
+                name: "PlayListUsuario");
 
             migrationBuilder.DropTable(
                 name: "Musica");

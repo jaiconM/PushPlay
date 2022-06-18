@@ -9,10 +9,10 @@ namespace PushPlay.Repository.Mapeamento
         public void Configure(EntityTypeBuilder<EstiloMusical> builder)
         {
             builder.ToTable("EstiloMusical");
-            builder.HasKey(x => x.Id);
+            builder.HasKey(estiloMusical => estiloMusical.Id);
 
-            builder.Property(x => x.Id).ValueGeneratedOnAdd();
-            builder.Property(x => x.Nome).HasMaxLength(200);
+            builder.Property(estiloMusical => estiloMusical.Id).ValueGeneratedOnAdd();
+            builder.Property(estiloMusical => estiloMusical.Nome).HasMaxLength(200);
 
             builder.HasData(
                 new EstiloMusical { Id = Guid.NewGuid(), Nome = "Rock" },

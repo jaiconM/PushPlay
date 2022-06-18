@@ -9,15 +9,15 @@ namespace PushPlay.Repository.Mapeamento
         public void Configure(EntityTypeBuilder<Artista> builder)
         {
             builder.ToTable("Artista");
-            builder.HasKey(x => x.Id);
+            builder.HasKey(artista => artista.Id);
 
-            builder.Property(x => x.Id).ValueGeneratedOnAdd();
-            builder.Property(x => x.Nome).IsRequired().HasMaxLength(200);
-            builder.Property(x => x.Descricao).HasMaxLength(500);
-            builder.Property(x => x.LinkFoto).HasMaxLength(500);
-            builder.Property(x => x.Tipo);
+            builder.Property(artista => artista.Id).ValueGeneratedOnAdd();
+            builder.Property(artista => artista.Nome).IsRequired().HasMaxLength(200);
+            builder.Property(artista => artista.Descricao).HasMaxLength(500);
+            builder.Property(artista => artista.LinkFoto).HasMaxLength(500);
+            builder.Property(artista => artista.Tipo);
 
-            builder.HasMany(x => x.Albuns).WithOne().OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(artista => artista.Albuns).WithOne().OnDelete(DeleteBehavior.Cascade);
         }
     }
 }
