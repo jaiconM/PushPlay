@@ -4,10 +4,7 @@ namespace PushPlay.Repository.Contexto
 {
     public class PushPlayContext : DbContext
     {
-        public PushPlayContext(DbContextOptions<PushPlayContext> options) : base(options)
-        {
-
-        }
+        public PushPlayContext(DbContextOptions<PushPlayContext> options) : base(options) { }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
