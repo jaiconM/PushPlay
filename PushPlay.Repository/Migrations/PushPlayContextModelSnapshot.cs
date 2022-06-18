@@ -22,6 +22,21 @@ namespace PushPlay.Repository.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("MusicaPlayList", b =>
+                {
+                    b.Property<Guid>("MusicasId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("PlayListsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("MusicasId", "PlayListsId");
+
+                    b.HasIndex("PlayListsId");
+
+                    b.ToTable("MusicaPlayList");
+                });
+
             modelBuilder.Entity("PushPlay.Domain.Entidades.Album", b =>
                 {
                     b.Property<Guid>("Id")
@@ -103,37 +118,37 @@ namespace PushPlay.Repository.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("20645dbf-a208-47cb-ba00-0cc13af37d36"),
+                            Id = new Guid("55c3512e-1698-4685-a9b2-23723f30f581"),
                             Nome = "Rock"
                         },
                         new
                         {
-                            Id = new Guid("bf7a62a2-98e0-4b68-983b-cb49741a4958"),
+                            Id = new Guid("f908ba6b-85ff-49e9-821f-b07aca28def2"),
                             Nome = "Eletrônico"
                         },
                         new
                         {
-                            Id = new Guid("3c9782e0-2887-49b2-b058-4fc569567ae9"),
+                            Id = new Guid("6f0cd7df-8eeb-4598-a51f-9f18721fdbaf"),
                             Nome = "Lounge"
                         },
                         new
                         {
-                            Id = new Guid("f8ac17f4-df92-45d4-9330-9958f3479fcd"),
+                            Id = new Guid("1e726066-ac52-4255-a55e-404442e73b54"),
                             Nome = "Sertanejo"
                         },
                         new
                         {
-                            Id = new Guid("f018a0ed-74a5-4c00-aa94-6342d1bac3bc"),
+                            Id = new Guid("ca55c97d-7189-4af8-af6c-a73a8148c066"),
                             Nome = "Samba"
                         },
                         new
                         {
-                            Id = new Guid("e492ec06-5cd0-4f62-8304-a50faaebbc5e"),
+                            Id = new Guid("af98ebf7-8e34-463b-a5a4-612d4cb80be7"),
                             Nome = "Forró"
                         },
                         new
                         {
-                            Id = new Guid("589e9b14-967d-40a8-b645-4d61eafa73b0"),
+                            Id = new Guid("21ad0e80-47ef-4ce7-9b6e-229f8c03288c"),
                             Nome = "MPB"
                         });
                 });
@@ -155,9 +170,6 @@ namespace PushPlay.Repository.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
 
-                    b.Property<Guid?>("PlayListId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("Sequencia")
                         .HasColumnType("int");
 
@@ -166,8 +178,6 @@ namespace PushPlay.Repository.Migrations
                     b.HasIndex("AlbumId");
 
                     b.HasIndex("EstiloMusicalId");
-
-                    b.HasIndex("PlayListId");
 
                     b.ToTable("Musica", (string)null);
                 });
@@ -214,6 +224,21 @@ namespace PushPlay.Repository.Migrations
                     b.ToTable("Usuario", (string)null);
                 });
 
+            modelBuilder.Entity("MusicaPlayList", b =>
+                {
+                    b.HasOne("PushPlay.Domain.Entidades.Musica", null)
+                        .WithMany()
+                        .HasForeignKey("MusicasId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("PushPlay.Domain.Entidades.PlayList", null)
+                        .WithMany()
+                        .HasForeignKey("PlayListsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("PushPlay.Domain.Entidades.Album", b =>
                 {
                     b.HasOne("PushPlay.Domain.Entidades.Artista", null)
@@ -234,11 +259,6 @@ namespace PushPlay.Repository.Migrations
                         .HasForeignKey("EstiloMusicalId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("PushPlay.Domain.Entidades.PlayList", null)
-                        .WithMany("Musicas")
-                        .HasForeignKey("PlayListId")
-                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.OwnsOne("PushPlay.Domain.ValueObjects.Duracao", "Duracao", b1 =>
                         {
@@ -324,11 +344,6 @@ namespace PushPlay.Repository.Migrations
             modelBuilder.Entity("PushPlay.Domain.Entidades.Artista", b =>
                 {
                     b.Navigation("Albuns");
-                });
-
-            modelBuilder.Entity("PushPlay.Domain.Entidades.PlayList", b =>
-                {
-                    b.Navigation("Musicas");
                 });
 
             modelBuilder.Entity("PushPlay.Domain.Entidades.Usuario", b =>

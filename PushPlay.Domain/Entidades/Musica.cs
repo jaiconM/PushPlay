@@ -9,6 +9,11 @@ namespace PushPlay.Domain.Entidades
         public string Nome { get; set; }
         public EstiloMusical EstiloMusical { get; set; }
         public Duracao Duracao { get; set; }
+        public IEnumerable<PlayList> PlayLists { get; set; }
 
+        public Musica()
+        {
+            PlayLists = new List<PlayList>();
+        }
     }
 }

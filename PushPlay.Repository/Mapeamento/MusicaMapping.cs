@@ -15,6 +15,7 @@ namespace PushPlay.Repository.Mapeamento
             builder.Property(x => x.Nome).IsRequired().HasMaxLength(200);
             builder.Property(x => x.Sequencia).IsRequired();
             builder.HasOne(x => x.EstiloMusical);
+            builder.HasMany(x => x.PlayLists).WithMany(x => x.Musicas);
 
             builder.OwnsOne(x => x.Duracao, p =>
             {

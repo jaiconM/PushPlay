@@ -14,7 +14,7 @@ namespace PushPlay.Repository.Mapeamento
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
             builder.Property(x => x.Nome).HasMaxLength(200);
 
-            builder.HasMany(x => x.Musicas).WithOne().OnDelete(DeleteBehavior.Cascade);
+            builder.HasMany(x => x.Musicas).WithMany(x => x.PlayLists);
         }
     }
 }
