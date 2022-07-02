@@ -14,7 +14,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PushPlay.CrossCutting", "Pu
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PushPlay.Repository", "PushPlay.Repository\PushPlay.Repository.csproj", "{727607AE-D3C8-4447-A779-810FC1BD0657}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PushPlay.Api", "PushPlay.Api\PushPlay.Api.csproj", "{A0E066B1-E6A9-46A4-A4F4-3C370DF83B98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PushPlay.Api", "PushPlay.Api\PushPlay.Api.csproj", "{A0E066B1-E6A9-46A4-A4F4-3C370DF83B98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PushPlay.Application", "PushPlay.Application\PushPlay.Application.csproj", "{F560814A-2E31-4F6F-BB89-5C82C061D6ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +40,10 @@ Global
 		{A0E066B1-E6A9-46A4-A4F4-3C370DF83B98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0E066B1-E6A9-46A4-A4F4-3C370DF83B98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0E066B1-E6A9-46A4-A4F4-3C370DF83B98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F560814A-2E31-4F6F-BB89-5C82C061D6ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F560814A-2E31-4F6F-BB89-5C82C061D6ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F560814A-2E31-4F6F-BB89-5C82C061D6ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F560814A-2E31-4F6F-BB89-5C82C061D6ED}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

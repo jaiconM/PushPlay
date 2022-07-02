@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using PushPlay.Domain.Entidades;
-using PushPlay.Domain.Repository;
+using PushPlay.Domain.AlbumContext;
+using PushPlay.Domain.AlbumContext.Repository;
 
 namespace PushPlay.Api.Controllers
 {

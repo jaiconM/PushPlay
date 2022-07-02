@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using PushPlay.Domain.Entidades;
-using PushPlay.Domain.Repository;
+using PushPlay.Domain.AlbumContext.Repository;
 
 namespace PushPlay.Api.Controllers
 {
@@ -16,16 +15,9 @@ namespace PushPlay.Api.Controllers
         }
 
         [HttpGet]
-        [Route("{id}")]
-        public async Task<Album?> Get(string id)
+        public async Task<IActionResult> GetAll()
         {
-            return await _albumRepository.Get(new Guid(id));
-        }
-
-        [HttpGet]
-        public async Task<IEnumerable<Album>> GetAll()
-        {
-            return await _albumRepository.GetAll();
+            return Ok(await _albumRepository.GetAll());
         }
 
     }

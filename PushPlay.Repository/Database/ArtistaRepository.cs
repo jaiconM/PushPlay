@@ -1,5 +1,5 @@
-﻿using PushPlay.Domain.Entidades;
-using PushPlay.Domain.Repository;
+﻿using PushPlay.Domain.AlbumContext;
+using PushPlay.Domain.AlbumContext.Repository;
 using PushPlay.Repository.Contexto;
 
 namespace PushPlay.Repository.Database

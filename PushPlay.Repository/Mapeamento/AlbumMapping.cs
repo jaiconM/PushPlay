@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PushPlay.Domain.Entidades;
+using PushPlay.Domain.AlbumContext;
 
 namespace PushPlay.Repository.Mapeamento
 {

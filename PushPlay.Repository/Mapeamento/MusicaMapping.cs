@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using PushPlay.Domain.Entidades;
+using PushPlay.Domain.AlbumContext;
 
 namespace PushPlay.Repository.Mapeamento
 {
@@ -13,7 +13,6 @@ namespace PushPlay.Repository.Mapeamento
 
             builder.Property(musica => musica.Id).ValueGeneratedOnAdd();
             builder.Property(musica => musica.Nome).IsRequired().HasMaxLength(200);
-            builder.Property(musica => musica.Sequencia).IsRequired();
             builder.HasOne(musica => musica.EstiloMusical);
             builder.HasMany(musica => musica.PlayLists).WithMany(playlist => playlist.Musicas);
 
