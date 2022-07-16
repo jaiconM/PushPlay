@@ -10,9 +10,9 @@ namespace PushPlay.Application.ContaContext.Dto
         string Email,
         [Required(ErrorMessage = "Senha é obrigatória")]
         string Senha,
-        string LinkFoto,
-        List<PlayListInputDto> PlayLists,
-        List<PlayListInputDto> PlayListsQueSegue
+        string? LinkFoto,
+        List<PlayListInputDto>? PlayLists,
+        List<PlayListInputDto>? PlayListsQueSegue
     );
 
     public record UsuarioOutputDto(
@@ -28,7 +28,7 @@ namespace PushPlay.Application.ContaContext.Dto
     public record PlayListInputDto(
         [Required(ErrorMessage = "Nome é obrigatório")]
         string Nome,
-        List<MusicaInputDto> Musicas
+        List<MusicaInputDto>? Musicas
     );
 
     public record PlayListOutputDto(

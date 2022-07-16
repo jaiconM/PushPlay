@@ -1,6 +1,8 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using PushPlay.Domain.ContaContext;
-using PushPlay.Domain.ContaContext.Repository;
+using PushPlay.Application.ContaContext.Dto;
+using PushPlay.Application.ContaContext.Handler.Command;
+using PushPlay.Application.ContaContext.Handler.Query;
 
 namespace PushPlay.Api.Controllers
 {
@@ -8,25 +10,24 @@ namespace PushPlay.Api.Controllers
     [Route("api/[controller]")]
     public class UsuarioController : ControllerBase
     {
-        private readonly IUsuarioRepository _usuarioRepository;
+        private readonly IMediator _mediator;
 
-        public UsuarioController(IUsuarioRepository usuarioRepository)
+        public UsuarioController(IMediator mediator)
         {
-            _usuarioRepository = usuarioRepository;
+            _mediator = mediator;
         }
 
-        [HttpGet]
-        [Route("{id}")]
-        public async Task<Usuario?> Get(string id)
+        [HttpGet("ListarTodos")]
+        public async Task<IActionResult> ListarTodos()
         {
-            return await _usuarioRepository.Get(new Guid(id));
+            return Ok(await _mediator.Send(new GetAllUsuarioQuery()));
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<Usuario>> GetAll()
+        [HttpPost("Criar")]
+        public async Task<IActionResult> Criar(UsuarioInputDto dto)
         {
-            return await _usuarioRepository.GetAll();
+            var result = await _mediator.Send(new CreateUsuarioCommand(dto));
+            return Created($"{result.Usuario.Id}", result.Usuario);
         }
-
     }
 }

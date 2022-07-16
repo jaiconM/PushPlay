@@ -1,15 +1,14 @@
-﻿using PushPlay.Domain.AlbumContext.Enums;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace PushPlay.Application.AlbumContext.Dto
 {
     public record AlbumInputDto(
         [Required(ErrorMessage = "Nome é obrigatório")]
         string Nome,
-        string Descricao,
-        string LinkFoto,
-        int Ano,
-        List<MusicaInputDto> Musicas
+        string? Descricao,
+        string? LinkFoto,
+        int? Ano,
+        List<MusicaInputDto>? Musicas
     );
 
     public record AlbumOutputDto(
@@ -24,8 +23,8 @@ namespace PushPlay.Application.AlbumContext.Dto
     public record MusicaInputDto(
         [Required(ErrorMessage = "Nome é obrigatório")]
         string Nome,
-        int Duracao,
-        EstiloMusicalInputDto EstiloMusical
+        int? Duracao,
+        EstiloMusicalInputDto? EstiloMusical
     );
 
     public record MusicaOutputDto(
@@ -48,10 +47,10 @@ namespace PushPlay.Application.AlbumContext.Dto
     public record ArtistaInputDto(
         [Required(ErrorMessage = "Nome é obrigatório")]
         string Nome,
-        string Descricao,
-        string LinkFoto,
-        TipoArtista Tipo,
-        List<AlbumInputDto> Albuns
+        string? Descricao,
+        string? LinkFoto,
+        int? Tipo,
+        List<AlbumInputDto>? Albuns
     );
 
     public record ArtistaOutputDto(
@@ -59,7 +58,7 @@ namespace PushPlay.Application.AlbumContext.Dto
         string Nome,
         string Descricao,
         string LinkFoto,
-        TipoArtista Tipo,
+        string Tipo,
         List<AlbumOutputDto> Albuns
     );
 }

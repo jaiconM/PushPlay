@@ -1,6 +1,8 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using PushPlay.Domain.AlbumContext;
-using PushPlay.Domain.AlbumContext.Repository;
+using PushPlay.Application.AlbumContext.Dto;
+using PushPlay.Application.AlbumContext.Handler.Command;
+using PushPlay.Application.AlbumContext.Handler.Query;
 
 namespace PushPlay.Api.Controllers
 {
@@ -8,25 +10,24 @@ namespace PushPlay.Api.Controllers
     [Route("api/[controller]")]
     public class EstiloMusicalController : ControllerBase
     {
-        private readonly IEstiloMusicalRepository _estiloMusicalRepository;
+        private readonly IMediator _mediator;
 
-        public EstiloMusicalController(IEstiloMusicalRepository estiloMusicalRepository)
+        public EstiloMusicalController(IMediator mediator)
         {
-            _estiloMusicalRepository = estiloMusicalRepository;
+            _mediator = mediator;
         }
 
-        [HttpGet]
-        [Route("{id}")]
-        public async Task<EstiloMusical?> Get(string id)
+        [HttpGet("ListarTodos")]
+        public async Task<IActionResult> ListarTodos()
         {
-            return await _estiloMusicalRepository.Get(new Guid(id));
+            return Ok(await _mediator.Send(new GetAllEstiloMusicalQuery()));
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<EstiloMusical>> GetAll()
+        [HttpPost("Criar")]
+        public async Task<IActionResult> Criar(EstiloMusicalInputDto dto)
         {
-            return await _estiloMusicalRepository.GetAll();
+            var result = await _mediator.Send(new CreateEstiloMusicalCommand(dto));
+            return Created($"{result.EstiloMusical.Id}", result.EstiloMusical);
         }
-
     }
 }

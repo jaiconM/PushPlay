@@ -1,24 +1,33 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using PushPlay.Domain.AlbumContext.Repository;
+using PushPlay.Application.AlbumContext.Dto;
+using PushPlay.Application.AlbumContext.Handler.Command;
+using PushPlay.Application.AlbumContext.Handler.Query;
 
 namespace PushPlay.Api.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
+    [ApiController]
     public class AlbumController : ControllerBase
     {
-        private readonly IAlbumRepository _albumRepository;
+        private readonly IMediator _mediator;
 
-        public AlbumController(IAlbumRepository albumRepository)
+        public AlbumController(IMediator mediator)
         {
-            _albumRepository = albumRepository;
+            _mediator = mediator;
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<IActionResult> ListarTodos()
         {
-            return Ok(await _albumRepository.GetAll());
+            return Ok(await _mediator.Send(new GetAllAlbumQuery()));
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Criar(AlbumInputDto dto)
+        {
+            var result = await _mediator.Send(new CreateAlbumCommand(dto));
+            return Created($"{result.Album.Id}", result.Album);
+        }
     }
 }

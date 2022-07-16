@@ -1,6 +1,8 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using PushPlay.Domain.AlbumContext;
-using PushPlay.Domain.AlbumContext.Repository;
+using PushPlay.Application.AlbumContext.Dto;
+using PushPlay.Application.AlbumContext.Handler.Command;
+using PushPlay.Application.AlbumContext.Handler.Query;
 
 namespace PushPlay.Api.Controllers
 {
@@ -8,25 +10,24 @@ namespace PushPlay.Api.Controllers
     [Route("api/[controller]")]
     public class MusicaController : ControllerBase
     {
-        private readonly IMusicaRepository _musicaRepository;
+        private readonly IMediator _mediator;
 
-        public MusicaController(IMusicaRepository musicaRepository)
+        public MusicaController(IMediator mediator)
         {
-            _musicaRepository = musicaRepository;
+            _mediator = mediator;
         }
 
-        [HttpGet]
-        [Route("{id}")]
-        public async Task<Musica?> Get(string id)
+        [HttpGet("ListarTodas")]
+        public async Task<IActionResult> ListarTodas()
         {
-            return await _musicaRepository.Get(new Guid(id));
+            return Ok(await _mediator.Send(new GetAllMusicaQuery()));
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<Musica>> GetAll()
+        [HttpPost("Criar")]
+        public async Task<IActionResult> Criar(MusicaInputDto dto)
         {
-            return await _musicaRepository.GetAll();
+            var result = await _mediator.Send(new CreateMusicaCommand(dto));
+            return Created($"{result.Musica.Id}", result.Musica);
         }
-
     }
 }

@@ -12,10 +12,10 @@ namespace PushPlay.Application.AlbumContext.Profile
             CreateMap<EstiloMusicalInputDto, EstiloMusical>();
 
             CreateMap<Musica, MusicaOutputDto>()
-                .ForMember(dto => dto.Duracao, mapper => mapper.MapFrom(musica => musica.Duracao.ValorFormatado));
+                .ForMember(dto => dto.Duracao, config => config.MapFrom(musica => musica.Duracao.ValorFormatado));
 
             CreateMap<MusicaInputDto, Musica>()
-                .ForPath(musica => musica.Duracao.Valor, mapper => mapper.MapFrom(dto => dto.Duracao));
+                .ForPath(musica => musica.Duracao.Valor, config => config.MapFrom(dto => dto.Duracao));
 
             CreateMap<Album, AlbumOutputDto>();
 

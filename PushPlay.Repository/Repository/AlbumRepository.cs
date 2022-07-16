@@ -10,9 +10,11 @@ namespace PushPlay.Data.Repository
     {
         public AlbumRepository(PushPlayContext context) : base(context) { }
 
-        public async Task<IEnumerable<Album>> ObterTodosAlbuns()
+        public async Task<IEnumerable<Album>> GetAllWithIncludes()
         {
-            return await Query.Include(x => x.Musicas).ToListAsync();
+            return await Query.Include(album => album.Musicas)
+                              .ThenInclude(musica => musica.EstiloMusical)
+                              .ToListAsync();
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using PushPlay.Application.AlbumContext.Service;
 using PushPlay.Application.ContaContext.Service;
 
@@ -9,6 +10,7 @@ namespace PushPlay.Application.Config
         public static IServiceCollection RegisterApplication(this IServiceCollection services)
         {
             services.AddAutoMapper(typeof(ConfigurationModule).Assembly);
+            services.AddMediatR(typeof(ConfigurationModule).Assembly);
 
             services.AddScoped<IAlbumService, AlbumService>();
             services.AddScoped<IArtistaService, ArtistaService>();

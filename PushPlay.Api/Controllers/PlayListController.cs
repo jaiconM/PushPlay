@@ -1,6 +1,8 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using PushPlay.Domain.ContaContext;
-using PushPlay.Domain.ContaContext.Repository;
+using PushPlay.Application.ContaContext.Dto;
+using PushPlay.Application.ContaContext.Handler.Command;
+using PushPlay.Application.ContaContext.Handler.Query;
 
 namespace PushPlay.Api.Controllers
 {
@@ -8,25 +10,24 @@ namespace PushPlay.Api.Controllers
     [Route("api/[controller]")]
     public class PlayListController : ControllerBase
     {
-        private readonly IPlayListRepository _playListRepository;
+        private readonly IMediator _mediator;
 
-        public PlayListController(IPlayListRepository playListRepository)
+        public PlayListController(IMediator mediator)
         {
-            _playListRepository = playListRepository;
+            _mediator = mediator;
         }
 
-        [HttpGet]
-        [Route("{id}")]
-        public async Task<PlayList?> Get(string id)
+        [HttpGet("ListarTodas")]
+        public async Task<IActionResult> ListarTodas()
         {
-            return await _playListRepository.Get(new Guid(id));
+            return Ok(await _mediator.Send(new GetAllPlayListQuery()));
         }
 
-        [HttpGet]
-        public async Task<IEnumerable<PlayList>> GetAll()
+        [HttpPost("Criar")]
+        public async Task<IActionResult> Criar(PlayListInputDto dto)
         {
-            return await _playListRepository.GetAll();
+            var result = await _mediator.Send(new CreatePlayListCommand(dto));
+            return Created($"{result.PlayList.Id}", result.PlayList);
         }
-
     }
 }

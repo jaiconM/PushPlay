@@ -27,7 +27,7 @@ namespace PushPlay.Application.AlbumContext.Service
 
         public async Task<List<AlbumOutputDto>> GetAll()
         {
-            var result = await _albumRepository.GetAll();
+            var result = await _albumRepository.GetAllWithIncludes();
 
             return _mapper.Map<List<AlbumOutputDto>>(result);
         }
