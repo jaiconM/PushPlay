@@ -1,21 +1,29 @@
-﻿using PushPlay.Application.Album.Dto;
+﻿using PushPlay.Application.AlbumContext.Dto;
 using PushPlay.Domain.AlbumContext;
 
-namespace PushPlay.Application.Album.Profile
+namespace PushPlay.Application.AlbumContext.Profile
 {
     public class AlbumProfile : AutoMapper.Profile
     {
         public AlbumProfile()
         {
+            CreateMap<EstiloMusical, EstiloMusicalOutputDto>();
+
+            CreateMap<EstiloMusicalInputDto, EstiloMusical>();
+
             CreateMap<Musica, MusicaOutputDto>()
                 .ForMember(dto => dto.Duracao, mapper => mapper.MapFrom(musica => musica.Duracao.ValorFormatado));
 
             CreateMap<MusicaInputDto, Musica>()
                 .ForPath(musica => musica.Duracao.Valor, mapper => mapper.MapFrom(dto => dto.Duracao));
 
-            CreateMap<Domain.AlbumContext.Album, AlbumOutputDto>();
+            CreateMap<Album, AlbumOutputDto>();
 
-            CreateMap<AlbumInputDto, Domain.AlbumContext.Album>();
+            CreateMap<AlbumInputDto, Album>();
+
+            CreateMap<Artista, ArtistaOutputDto>();
+
+            CreateMap<ArtistaInputDto, Artista>();
         }
     }
 }

@@ -2,7 +2,7 @@
 using System.Data;
 using System.Linq.Expressions;
 
-namespace PushPlay.Repository.Database.Interfaces
+namespace PushPlay.CrossCutting.Interfaces.Data
 {
     public interface IRepository<T> where T : class
     {

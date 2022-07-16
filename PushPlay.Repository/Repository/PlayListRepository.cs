@@ -1,8 +1,9 @@
-﻿using PushPlay.Domain.ContaContext;
+﻿using PushPlay.Data.Contexto;
+using PushPlay.Data.Database;
+using PushPlay.Domain.ContaContext;
 using PushPlay.Domain.ContaContext.Repository;
-using PushPlay.Repository.Contexto;
 
-namespace PushPlay.Repository.Database
+namespace PushPlay.Data.Repository
 {
     public class PlayListRepository : Repository<PlayList>, IPlayListRepository
     {

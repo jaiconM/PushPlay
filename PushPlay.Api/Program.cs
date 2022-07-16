@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using PushPlay.Application.Config;
-using PushPlay.Repository.Config;
+using PushPlay.Data.Config;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace PushPlay.Repository.Migrations
+namespace PushPlay.Data.Migrations
 {
     public partial class Initial : Migration
     {
@@ -171,13 +171,13 @@ namespace PushPlay.Repository.Migrations
                 columns: new[] { "Id", "Nome" },
                 values: new object[,]
                 {
-                    { new Guid("12c3bec0-14c1-44fa-bac0-67d8d748a680"), "Samba" },
-                    { new Guid("31551f53-a578-4cab-91ea-112dd7629642"), "Lounge" },
-                    { new Guid("38cac14c-3b67-40f2-bd80-a2b3eb48a0ba"), "Rock" },
-                    { new Guid("7d534f9b-b950-4496-8088-25b001c277d2"), "Forró" },
-                    { new Guid("80e6621e-eb1f-4522-beb0-2b6ade0e3a78"), "Sertanejo" },
-                    { new Guid("b363b7b3-582f-48dc-8fe1-bb749cbc6b78"), "Eletrônico" },
-                    { new Guid("f65bc513-edba-4271-952d-48ac394fae3a"), "MPB" }
+                    { new Guid("058754e1-5d13-4f3b-a1f1-5b3d89d05329"), "Eletrônico" },
+                    { new Guid("09d6c036-a977-47c6-943d-ea750ed5b42e"), "MPB" },
+                    { new Guid("3adddf09-8e81-4c3f-9ffa-4f270bb6c272"), "Forró" },
+                    { new Guid("45b171f2-34f3-44ce-b399-7a567adb3e60"), "Rock" },
+                    { new Guid("585d0f7c-0226-48a8-9204-8cb76a4f417b"), "Sertanejo" },
+                    { new Guid("b0721179-df6a-45c8-ae13-313011554837"), "Lounge" },
+                    { new Guid("f3edad5f-d18a-4126-ab60-b5abc4f10170"), "Samba" }
                 });
 
             migrationBuilder.CreateIndex(

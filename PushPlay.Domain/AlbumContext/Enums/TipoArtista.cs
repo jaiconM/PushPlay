@@ -2,7 +2,11 @@
 {
     public enum TipoArtista
     {
+        Indefinido,
         Solo,
-        Banda
+        Banda,
+        DJ,
+        Dupla,
+        Orquestra
     }
 }

@@ -4,11 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using PushPlay.Repository.Contexto;
+using PushPlay.Data.Contexto;
 
 #nullable disable
 
-namespace PushPlay.Repository.Migrations
+namespace PushPlay.Data.Migrations
 {
     [DbContext(typeof(PushPlayContext))]
     partial class PushPlayContextModelSnapshot : ModelSnapshot
@@ -133,37 +133,37 @@ namespace PushPlay.Repository.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("38cac14c-3b67-40f2-bd80-a2b3eb48a0ba"),
+                            Id = new Guid("45b171f2-34f3-44ce-b399-7a567adb3e60"),
                             Nome = "Rock"
                         },
                         new
                         {
-                            Id = new Guid("b363b7b3-582f-48dc-8fe1-bb749cbc6b78"),
+                            Id = new Guid("058754e1-5d13-4f3b-a1f1-5b3d89d05329"),
                             Nome = "Eletrônico"
                         },
                         new
                         {
-                            Id = new Guid("31551f53-a578-4cab-91ea-112dd7629642"),
+                            Id = new Guid("b0721179-df6a-45c8-ae13-313011554837"),
                             Nome = "Lounge"
                         },
                         new
                         {
-                            Id = new Guid("80e6621e-eb1f-4522-beb0-2b6ade0e3a78"),
+                            Id = new Guid("585d0f7c-0226-48a8-9204-8cb76a4f417b"),
                             Nome = "Sertanejo"
                         },
                         new
                         {
-                            Id = new Guid("12c3bec0-14c1-44fa-bac0-67d8d748a680"),
+                            Id = new Guid("f3edad5f-d18a-4126-ab60-b5abc4f10170"),
                             Nome = "Samba"
                         },
                         new
                         {
-                            Id = new Guid("7d534f9b-b950-4496-8088-25b001c277d2"),
+                            Id = new Guid("3adddf09-8e81-4c3f-9ffa-4f270bb6c272"),
                             Nome = "Forró"
                         },
                         new
                         {
-                            Id = new Guid("f65bc513-edba-4271-952d-48ac394fae3a"),
+                            Id = new Guid("09d6c036-a977-47c6-943d-ea750ed5b42e"),
                             Nome = "MPB"
                         });
                 });

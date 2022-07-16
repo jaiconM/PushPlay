@@ -1,8 +1,9 @@
-﻿using PushPlay.Domain.AlbumContext;
+﻿using PushPlay.Data.Contexto;
+using PushPlay.Data.Database;
+using PushPlay.Domain.AlbumContext;
 using PushPlay.Domain.AlbumContext.Repository;
-using PushPlay.Repository.Contexto;
 
-namespace PushPlay.Repository.Database
+namespace PushPlay.Data.Repository
 {
     public class ArtistaRepository : Repository<Artista>, IArtistaRepository
     {

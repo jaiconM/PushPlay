@@ -1,11 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using PushPlay.Data.Contexto;
+using PushPlay.Data.Database;
+using PushPlay.Data.Repository;
 using PushPlay.Domain.AlbumContext.Repository;
 using PushPlay.Domain.ContaContext.Repository;
-using PushPlay.Repository.Contexto;
-using PushPlay.Repository.Database;
 
-namespace PushPlay.Repository.Config
+namespace PushPlay.Data.Config
 {
     public static class ConfigurationModule
     {

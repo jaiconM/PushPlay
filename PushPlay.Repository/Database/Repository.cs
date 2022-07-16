@@ -1,11 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage;
-using PushPlay.Repository.Contexto;
-using PushPlay.Repository.Database.Interfaces;
+using PushPlay.CrossCutting.Interfaces.Data;
+using PushPlay.Data.Contexto;
 using System.Data;
 using System.Linq.Expressions;
 
-namespace PushPlay.Repository.Database
+namespace PushPlay.Data.Database
 {
     public class Repository<T> : IRepository<T> where T : class
     {

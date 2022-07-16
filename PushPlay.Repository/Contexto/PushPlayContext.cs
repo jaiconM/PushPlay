@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace PushPlay.Repository.Contexto
+namespace PushPlay.Data.Contexto
 {
     public class PushPlayContext : DbContext
     {

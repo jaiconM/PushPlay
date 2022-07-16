@@ -12,11 +12,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PushPlay.CrossCutting", "PushPlay.CrossCutting\PushPlay.CrossCutting.csproj", "{FE0457B0-6E52-43CF-939A-74D522197391}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PushPlay.Repository", "PushPlay.Repository\PushPlay.Repository.csproj", "{727607AE-D3C8-4447-A779-810FC1BD0657}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PushPlay.Data", "PushPlay.Repository\PushPlay.Data.csproj", "{727607AE-D3C8-4447-A779-810FC1BD0657}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PushPlay.Api", "PushPlay.Api\PushPlay.Api.csproj", "{A0E066B1-E6A9-46A4-A4F4-3C370DF83B98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PushPlay.Application", "PushPlay.Application\PushPlay.Application.csproj", "{F560814A-2E31-4F6F-BB89-5C82C061D6ED}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PushPlay.Application", "PushPlay.Application\PushPlay.Application.csproj", "{F560814A-2E31-4F6F-BB89-5C82C061D6ED}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

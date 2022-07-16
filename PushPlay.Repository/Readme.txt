@@ -1,12 +1,14 @@
 ﻿
-Primeiro criar a base de dados e atualizar a connectionString em PushPlay.Api > appsettings.json
+1 - Criar um database com nome PushPlayDB
 
-- via Package Manager Console
-Para instalar as ferramentas para criar migrations e atualizar a base de dados:
- > Install-Package Microsoft.EntityFrameworkCore.Tools
+2 - Atualizar a connectionString em PushPlay.Api > appsettings.json
 
- Para criar a migration:
- > Add-Migration NomeDaMigration
+3 - Via Tools > Nuget Package Manager > Package Manager Console
+	A - Para instalar as ferramentas para criar migrations e atualizar a base de dados:
+	 > Install-Package Microsoft.EntityFrameworkCore.Tools
 
- Para atualizar a base de dados (aplicar as migrations):
- > Update-Database
+	B - Para criar/atualizar as migrations:
+	 > Add-Migration NomeDaMigration
+
+	C - Para atualizar a base de dados (aplicar as migrations):
+	 > Update-Database

@@ -1,8 +1,9 @@
 ﻿using AutoMapper;
-using PushPlay.Application.Album.Dto;
+using PushPlay.Application.AlbumContext.Dto;
+using PushPlay.Domain.AlbumContext;
 using PushPlay.Domain.AlbumContext.Repository;
 
-namespace PushPlay.Application.Album.Service
+namespace PushPlay.Application.AlbumContext.Service
 {
     public class AlbumService : IAlbumService
     {
@@ -17,14 +18,14 @@ namespace PushPlay.Application.Album.Service
 
         public async Task<AlbumOutputDto> Create(AlbumInputDto dto)
         {
-            var album = _mapper.Map<Domain.AlbumContext.Album>(dto);
+            var album = _mapper.Map<Album>(dto);
 
             await _albumRepository.Save(album);
 
             return _mapper.Map<AlbumOutputDto>(album);
         }
 
-        public async Task<List<AlbumOutputDto>> ObterTodos()
+        public async Task<List<AlbumOutputDto>> GetAll()
         {
             var result = await _albumRepository.GetAll();
 

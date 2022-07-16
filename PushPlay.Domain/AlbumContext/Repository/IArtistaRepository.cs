@@ -1,4 +1,4 @@
-﻿using PushPlay.Repository.Database.Interfaces;
+﻿using PushPlay.CrossCutting.Interfaces.Data;
 
 namespace PushPlay.Domain.AlbumContext.Repository
 {

@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using PushPlay.Application.Album.Service;
+using PushPlay.Application.AlbumContext.Service;
+using PushPlay.Application.ContaContext.Service;
 
 namespace PushPlay.Application.Config
 {
@@ -10,6 +11,11 @@ namespace PushPlay.Application.Config
             services.AddAutoMapper(typeof(ConfigurationModule).Assembly);
 
             services.AddScoped<IAlbumService, AlbumService>();
+            services.AddScoped<IArtistaService, ArtistaService>();
+            services.AddScoped<IEstiloMusicalService, EstiloMusicalService>();
+            services.AddScoped<IMusicaService, MusicaService>();
+            services.AddScoped<IPlayListService, PlayListService>();
+            services.AddScoped<IUsuarioService, UsuarioService>();
 
             return services;
         }

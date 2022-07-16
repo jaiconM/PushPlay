@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using PushPlay.Domain.ContaContext;
 
-namespace PushPlay.Repository.Mapeamento
+namespace PushPlay.Data.Mapeamento
 {
     public class PlayListMapping : IEntityTypeConfiguration<PlayList>
     {

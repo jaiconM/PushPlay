@@ -16,7 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PushPlay.Application\PushPlay.Application.csproj" />
-    <ProjectReference Include="..\PushPlay.Repository\PushPlay.Repository.csproj" />
+    <ProjectReference Include="..\PushPlay.Repository\PushPlay.Data.csproj" />
   </ItemGroup>
 
 </Project>
