@@ -20,7 +20,8 @@ namespace PushPlay.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> ListarTodos()
         {
-            return Ok(await _mediator.Send(new GetAllAlbumQuery()));
+            var resut = await _mediator.Send(new GetAllAlbumQuery());
+            return Ok(resut.Albums);
         }
 
         [HttpPost]
