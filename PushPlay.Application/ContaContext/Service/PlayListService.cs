@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PushPlay.Application.ContaContext.Dto;
+using PushPlay.CrossCutting.Exceptions;
 using PushPlay.Domain.ContaContext;
 using PushPlay.Domain.ContaContext.Repository;
 
@@ -30,6 +31,38 @@ namespace PushPlay.Application.ContaContext.Service
             var result = await _playlistRepository.GetAll();
 
             return _mapper.Map<List<PlayListOutputDto>>(result);
+        }
+
+        public async Task<PlayListOutputDto> GetById(Guid id)
+        {
+            var entity = await _playlistRepository.Get(id);
+            if (entity == null)
+                throw new IdNotFoundException(nameof(PlayList));
+
+            return _mapper.Map<PlayListOutputDto>(entity);
+        }
+
+        public async Task<PlayListOutputDto> Update(Guid id, PlayListInputDto dto)
+        {
+            var entity = await _playlistRepository.Get(id);
+            if (entity == null)
+                throw new IdNotFoundException(nameof(PlayList));
+
+            entity = _mapper.Map(dto, entity);
+            await _playlistRepository.Update(entity);
+
+            return _mapper.Map<PlayListOutputDto>(entity);
+        }
+
+        public async Task<bool> Delete(Guid id)
+        {
+            var entity = await _playlistRepository.Get(id);
+            if (entity == null)
+                throw new IdNotFoundException(nameof(PlayList));
+
+            await _playlistRepository.Delete(entity);
+
+            return true;
         }
     }
 }

@@ -11,5 +11,9 @@
             Valor = email ?? throw new ArgumentNullException(nameof(email));
         }
 
+        public override string ToString()
+        {
+            return Valor;
+        }
     }
 }

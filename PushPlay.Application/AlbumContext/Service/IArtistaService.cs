@@ -6,5 +6,9 @@ namespace PushPlay.Application.AlbumContext.Service
     {
         Task<ArtistaOutputDto> Create(ArtistaInputDto dto);
         Task<List<ArtistaOutputDto>> GetAll();
+        Task<ArtistaOutputDto> GetById(Guid id);
+        Task<ArtistaOutputDto> Update(Guid id, ArtistaInputDto dto);
+        Task<bool> Delete(Guid id);
+
     }
 }

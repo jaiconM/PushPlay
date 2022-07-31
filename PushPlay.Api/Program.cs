@@ -1,10 +1,14 @@
 using Microsoft.EntityFrameworkCore;
+using PushPlay.Api.Filters;
 using PushPlay.Application.Config;
 using PushPlay.Data.Config;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<CustomExceptionFilterAtribute>();
+});
 builder.Services
     .RegisterApplication()
     .RegisterRepository(builder.Configuration.GetConnectionString("PushPlayDBConn"));

@@ -6,7 +6,10 @@ using PushPlay.Application.ContaContext.Service;
 namespace PushPlay.Application.ContaContext.Handler
 {
     public class PlayListHandler : IRequestHandler<CreatePlayListCommand, CreatePlayListCommandResponse>,
-                                IRequestHandler<GetAllPlayListQuery, GetAllPlayListQueryResponse>
+                                   IRequestHandler<GetAllPlayListQuery, GetAllPlayListQueryResponse>,
+                                   IRequestHandler<GetByIdPlayListQuery, GetByIdPlayListQueryResponse>,
+                                   IRequestHandler<UpdatePlayListCommand, UpdatePlayListCommandResponse>,
+                                   IRequestHandler<DeletePlayListCommand, bool>
     {
         private readonly IPlayListService _playListService;
 
@@ -26,5 +29,23 @@ namespace PushPlay.Application.ContaContext.Handler
             var result = await _playListService.GetAll();
             return new GetAllPlayListQueryResponse(result);
         }
+
+        public async Task<GetByIdPlayListQueryResponse> Handle(GetByIdPlayListQuery request, CancellationToken cancellationToken)
+        {
+            var result = await _playListService.GetById(request.Id);
+            return new GetByIdPlayListQueryResponse(result);
+        }
+
+        public async Task<UpdatePlayListCommandResponse> Handle(UpdatePlayListCommand request, CancellationToken cancellationToken)
+        {
+            var result = await _playListService.Update(request.Id, request.PlayList);
+            return new UpdatePlayListCommandResponse(result);
+        }
+
+        public async Task<bool> Handle(DeletePlayListCommand request, CancellationToken cancellationToken)
+        {
+            return await _playListService.Delete(request.Id);
+        }
+
     }
 }

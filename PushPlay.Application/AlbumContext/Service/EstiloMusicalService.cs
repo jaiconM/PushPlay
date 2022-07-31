@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using PushPlay.Application.AlbumContext.Dto;
+using PushPlay.CrossCutting.Exceptions;
 using PushPlay.Domain.AlbumContext;
 using PushPlay.Domain.AlbumContext.Repository;
 
@@ -30,6 +31,38 @@ namespace PushPlay.Application.AlbumContext.Service
             var result = await _estiloMusicalRepository.GetAll();
 
             return _mapper.Map<List<EstiloMusicalOutputDto>>(result);
+        }
+
+        public async Task<EstiloMusicalOutputDto> GetById(Guid id)
+        {
+            var entity = await _estiloMusicalRepository.Get(id);
+            if (entity == null)
+                throw new IdNotFoundException(nameof(EstiloMusical));
+
+            return _mapper.Map<EstiloMusicalOutputDto>(entity);
+        }
+
+        public async Task<EstiloMusicalOutputDto> Update(Guid id, EstiloMusicalInputDto dto)
+        {
+            var entity = await _estiloMusicalRepository.Get(id);
+            if (entity == null)
+                throw new IdNotFoundException(nameof(EstiloMusical));
+
+            entity = _mapper.Map(dto, entity);
+            await _estiloMusicalRepository.Update(entity);
+
+            return _mapper.Map<EstiloMusicalOutputDto>(entity);
+        }
+
+        public async Task<bool> Delete(Guid id)
+        {
+            var entity = await _estiloMusicalRepository.Get(id);
+            if (entity == null)
+                throw new IdNotFoundException(nameof(EstiloMusical));
+
+            await _estiloMusicalRepository.Delete(entity);
+
+            return true;
         }
     }
 }

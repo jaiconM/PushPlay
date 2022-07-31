@@ -1,4 +1,4 @@
-﻿namespace PushPlay.CrossCutting.Entity
+﻿namespace PushPlay.CrossCutting.BaseEntity
 {
     public class Entity<T>
     {

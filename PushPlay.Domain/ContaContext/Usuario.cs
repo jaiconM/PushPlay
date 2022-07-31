@@ -1,5 +1,5 @@
 ﻿using FluentValidation;
-using PushPlay.CrossCutting.Entity;
+using PushPlay.CrossCutting.BaseEntity;
 using PushPlay.CrossCutting.Utils;
 using PushPlay.Domain.ContaContext.Validacoes;
 using PushPlay.Domain.ContaContext.ValueObjects;

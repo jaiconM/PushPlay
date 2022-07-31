@@ -6,7 +6,10 @@ using PushPlay.Application.ContaContext.Service;
 namespace PushPlay.Application.ContaContext.Handler
 {
     public class UsuarioHandler : IRequestHandler<CreateUsuarioCommand, CreateUsuarioCommandResponse>,
-                                IRequestHandler<GetAllUsuarioQuery, GetAllUsuarioQueryResponse>
+                                  IRequestHandler<GetAllUsuarioQuery, GetAllUsuarioQueryResponse>,
+                                  IRequestHandler<GetByIdUsuarioQuery, GetByIdUsuarioQueryResponse>,
+                                  IRequestHandler<UpdateUsuarioCommand, UpdateUsuarioCommandResponse>,
+                                  IRequestHandler<DeleteUsuarioCommand, bool>
     {
         private readonly IUsuarioService _usuarioService;
 
@@ -26,5 +29,23 @@ namespace PushPlay.Application.ContaContext.Handler
             var result = await _usuarioService.GetAll();
             return new GetAllUsuarioQueryResponse(result);
         }
+
+        public async Task<GetByIdUsuarioQueryResponse> Handle(GetByIdUsuarioQuery request, CancellationToken cancellationToken)
+        {
+            var result = await _usuarioService.GetById(request.Id);
+            return new GetByIdUsuarioQueryResponse(result);
+        }
+
+        public async Task<UpdateUsuarioCommandResponse> Handle(UpdateUsuarioCommand request, CancellationToken cancellationToken)
+        {
+            var result = await _usuarioService.Update(request.Id, request.Usuario);
+            return new UpdateUsuarioCommandResponse(result);
+        }
+
+        public async Task<bool> Handle(DeleteUsuarioCommand request, CancellationToken cancellationToken)
+        {
+            return await _usuarioService.Delete(request.Id);
+        }
+
     }
 }

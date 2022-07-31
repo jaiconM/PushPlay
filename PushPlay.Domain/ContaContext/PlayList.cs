@@ -1,4 +1,4 @@
-﻿using PushPlay.CrossCutting.Entity;
+﻿using PushPlay.CrossCutting.BaseEntity;
 using PushPlay.Domain.AlbumContext;
 
 namespace PushPlay.Domain.ContaContext

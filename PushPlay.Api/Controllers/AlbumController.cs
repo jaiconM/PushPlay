@@ -30,5 +30,25 @@ namespace PushPlay.Api.Controllers
             var result = await _mediator.Send(new CreateAlbumCommand(dto));
             return Created($"{result.Album.Id}", result.Album);
         }
+
+        [HttpGet("ListarPorId/{id}")]
+        public async Task<IActionResult> ListarPorId(Guid id)
+        {
+            return Ok(await _mediator.Send(new GetByIdAlbumQuery(id)));
+        }
+
+        [HttpPut("Atualizar/{id}")]
+        public async Task<IActionResult> Atualizar(Guid id, AlbumInputDto dto)
+        {
+            var result = await _mediator.Send(new UpdateAlbumCommand(id, dto));
+            return Ok(result.Album);
+        }
+
+        [HttpDelete("Excluir/{id}")]
+        public async Task<IActionResult> Excluir(Guid id)
+        {
+            await _mediator.Send(new DeleteAlbumCommand(id));
+            return Ok("Exclusão realizada com sucesso!");
+        }
     }
 }

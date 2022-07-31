@@ -19,7 +19,6 @@ namespace PushPlay.Application.ContaContext.Dto
         Guid Id,
         string Nome,
         string Email,
-        string Senha,
         string LinkFoto,
         List<PlayListOutputDto> PlayLists,
         List<PlayListOutputDto> PlayListsQueSegue
