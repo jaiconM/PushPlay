@@ -3,11 +3,11 @@ using FluentAssertions;
 using Moq;
 using PushPlay.Application.AlbumContext.Dto;
 using PushPlay.Application.AlbumContext.Service;
+using PushPlay.CrossCutting.Exceptions;
 using PushPlay.Domain.AlbumContext;
 using PushPlay.Domain.AlbumContext.Repository;
-using PushPlay.Tests.Application.AlbumContext;
 
-namespace PushPlay.Tests.Api
+namespace PushPlay.Tests.Application.AlbumContext.Service
 {
     public class AlbumServiceTests
     {
@@ -72,6 +72,33 @@ namespace PushPlay.Tests.Api
             _ = await _service.Create(input);
 
             _repositoryMock.Verify(mock => mock.Save(It.Is<Album>(a => a.Id == album.Id)), Times.Once);
+        }
+
+        [Fact]
+        public async Task GetById_deve_gerar_IdNotFoundException_quando_id_invalido()
+        {
+            _repositoryMock.Setup(mock => mock.Get(It.IsAny<Guid>())).ReturnsAsync((Album)null);
+
+            Func<Task> act = () => _service.GetById(Guid.NewGuid());
+            await act.Should().ThrowAsync<IdNotFoundException>().WithMessage("Id de Album não localizado");
+        }
+
+        [Fact]
+        public async Task Update_deve_gerar_IdNotFoundException_quando_id_invalido()
+        {
+            _repositoryMock.Setup(mock => mock.Get(It.IsAny<Guid>())).ReturnsAsync((Album)null);
+
+            Func<Task> act = () => _service.Update(Guid.NewGuid(), AlbumMockHelper.MockAlbumInputDto());
+            await act.Should().ThrowAsync<IdNotFoundException>().WithMessage("Id de Album não localizado");
+        }
+
+        [Fact]
+        public async Task Delete_deve_gerar_IdNotFoundException_quando_id_invalido()
+        {
+            _repositoryMock.Setup(mock => mock.Get(It.IsAny<Guid>())).ReturnsAsync((Album)null);
+
+            Func<Task> act = () => _service.Delete(Guid.NewGuid());
+            await act.Should().ThrowAsync<IdNotFoundException>().WithMessage("Id de Album não localizado");
         }
     }
 }

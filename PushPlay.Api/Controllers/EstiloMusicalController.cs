@@ -20,7 +20,8 @@ namespace PushPlay.Api.Controllers
         [HttpGet("ListarTodos")]
         public async Task<IActionResult> ListarTodos()
         {
-            return Ok(await _mediator.Send(new GetAllEstiloMusicalQuery()));
+            var result = await _mediator.Send(new GetAllEstiloMusicalQuery());
+            return Ok(result.EstilosMusicais);
         }
 
         [HttpPost("Criar")]
@@ -33,7 +34,8 @@ namespace PushPlay.Api.Controllers
         [HttpGet("ListarPorId/{id}")]
         public async Task<IActionResult> ListarPorId(Guid id)
         {
-            return Ok(await _mediator.Send(new GetByIdEstiloMusicalQuery(id)));
+            var result = await _mediator.Send(new GetByIdEstiloMusicalQuery(id));
+            return Ok(result.EstiloMusical);
         }
 
         [HttpPut("Atualizar/{id}")]

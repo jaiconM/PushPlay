@@ -20,7 +20,8 @@ namespace PushPlay.Api.Controllers
         [HttpGet("ListarTodos")]
         public async Task<IActionResult> ListarTodos()
         {
-            return Ok(await _mediator.Send(new GetAllUsuarioQuery()));
+            var result = await _mediator.Send(new GetAllUsuarioQuery());
+            return Ok(result.Usuarios);
         }
 
         [HttpPost("Criar")]
@@ -33,7 +34,8 @@ namespace PushPlay.Api.Controllers
         [HttpGet("ListarPorId/{id}")]
         public async Task<IActionResult> ListarPorId(Guid id)
         {
-            return Ok(await _mediator.Send(new GetByIdUsuarioQuery(id)));
+            var result = await _mediator.Send(new GetByIdUsuarioQuery(id));
+            return Ok(result.Usuario);
         }
 
         [HttpPut("Atualizar/{id}")]

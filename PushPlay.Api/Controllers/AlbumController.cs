@@ -34,7 +34,8 @@ namespace PushPlay.Api.Controllers
         [HttpGet("ListarPorId/{id}")]
         public async Task<IActionResult> ListarPorId(Guid id)
         {
-            return Ok(await _mediator.Send(new GetByIdAlbumQuery(id)));
+            var result = await _mediator.Send(new GetByIdAlbumQuery(id));
+            return Ok(result.Album);
         }
 
         [HttpPut("Atualizar/{id}")]

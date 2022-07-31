@@ -5,9 +5,8 @@ using PushPlay.Application.AlbumContext.Handler;
 using PushPlay.Application.AlbumContext.Handler.Command;
 using PushPlay.Application.AlbumContext.Handler.Query;
 using PushPlay.Application.AlbumContext.Service;
-using PushPlay.Tests.Application.AlbumContext;
 
-namespace PushPlay.Tests.Api
+namespace PushPlay.Tests.Application.AlbumContext.Handler
 {
     public class AlbumHandlerTests
     {
@@ -51,6 +50,49 @@ namespace PushPlay.Tests.Api
             var actual = await _handler.Handle(new CreateAlbumCommand(input), new CancellationToken());
 
             actual.Should().BeEquivalentTo(expected);
+        }
+
+        [Fact]
+        public async Task GetByIdAlbumQuery_Handle_deve_retornar_conforme_esperado()
+        {
+            var id = Guid.NewGuid();
+            var album = AlbumMockHelper.MockAlbumOutputDto();
+            var expected = new GetByIdAlbumQueryResponse(album);
+
+            _serviceMock.Setup(mock => mock.GetById(id)).ReturnsAsync(album);
+
+            var actual = await _handler.Handle(new GetByIdAlbumQuery(id), new CancellationToken());
+
+            actual.Should().BeEquivalentTo(expected);
+        }
+
+        [Fact]
+        public async Task UpdateAlbumCommand_Handle_deve_retornar_conforme_esperado()
+        {
+            var id = Guid.NewGuid();
+            var input = AlbumMockHelper.MockAlbumInputDto();
+
+            var album = AlbumMockHelper.MockAlbumOutputDto();
+            var expected = new UpdateAlbumCommandResponse(album);
+
+            _serviceMock.Setup(mock => mock.Update(id, input)).ReturnsAsync(album);
+
+            var actual = await _handler.Handle(new UpdateAlbumCommand(id, input), new CancellationToken());
+
+            actual.Should().BeEquivalentTo(expected);
+        }
+
+        [Fact]
+        public async Task DeleteAlbumCommand_Handle_deve_retornar_conforme_esperado()
+        {
+            var id = Guid.NewGuid();
+            var expected = true;
+
+            _serviceMock.Setup(mock => mock.Delete(id)).ReturnsAsync(expected);
+
+            var actual = await _handler.Handle(new DeleteAlbumCommand(id), new CancellationToken());
+
+            actual.Should().Be(expected);
         }
     }
 }

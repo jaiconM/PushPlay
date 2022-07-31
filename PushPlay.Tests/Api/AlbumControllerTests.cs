@@ -6,6 +6,8 @@ using PushPlay.Api.Controllers;
 using PushPlay.Application.AlbumContext.Dto;
 using PushPlay.Application.AlbumContext.Handler.Command;
 using PushPlay.Application.AlbumContext.Handler.Query;
+using PushPlay.CrossCutting.Exceptions;
+using PushPlay.Domain.AlbumContext;
 using PushPlay.Tests.Application.AlbumContext;
 
 namespace PushPlay.Tests.Api
@@ -66,6 +68,125 @@ namespace PushPlay.Tests.Api
             _ = await _controller.Criar(input);
 
             _mediatorMock.Verify(mock => mock.Send(It.Is<CreateAlbumCommand>(command => command.Album == input), It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task ListarPorId_deve_retornar_conforme_esperado()
+        {
+            var expected = AlbumMockHelper.MockAlbumOutputDto();
+            var id = Guid.NewGuid();
+
+            _mediatorMock.Setup(mock => mock.Send(It.IsAny<GetByIdAlbumQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(new GetByIdAlbumQueryResponse(expected));
+
+            var result = await _controller.ListarPorId(id);
+
+            var actual = result as OkObjectResult;
+
+            actual.StatusCode.Should().Be(200);
+            actual.Value.Should().Be(expected);
+        }
+
+        [Fact]
+        public async Task ListarPorId_deve_gerar_IdNotFoundException_quando_id_invalido()
+        {
+            var expectedException = new IdNotFoundException(nameof(Album));
+
+            _mediatorMock.Setup(mock => mock.Send(It.IsAny<GetByIdAlbumQuery>(), It.IsAny<CancellationToken>())).ThrowsAsync(expectedException);
+
+            Func<Task> act = () => _controller.ListarPorId(Guid.NewGuid());
+            await act.Should().ThrowAsync<IdNotFoundException>().WithMessage("Id de Album não localizado");
+        }
+
+        [Fact]
+        public async Task ListarPorId_deve_chamar_mediatr_conforme_esperado()
+        {
+            var id = Guid.NewGuid();
+
+            _mediatorMock.Setup(mock => mock.Send(It.IsAny<GetByIdAlbumQuery>(), It.IsAny<CancellationToken>())).ReturnsAsync(new GetByIdAlbumQueryResponse(AlbumMockHelper.MockAlbumOutputDto()));
+
+            _ = await _controller.ListarPorId(id);
+
+            _mediatorMock.Verify(mock => mock.Send(It.Is<GetByIdAlbumQuery>(command => command.Id == id), It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task Atualizar_deve_retornar_conforme_esperado()
+        {
+            var expected = AlbumMockHelper.MockAlbumOutputDto();
+            var input = AlbumMockHelper.MockAlbumInputDto();
+            var id = Guid.NewGuid();
+
+            _mediatorMock.Setup(mock => mock.Send(It.IsAny<UpdateAlbumCommand>(), It.IsAny<CancellationToken>())).ReturnsAsync(new UpdateAlbumCommandResponse(expected));
+
+            var result = await _controller.Atualizar(id, input);
+
+            var actual = result as OkObjectResult;
+
+            actual.StatusCode.Should().Be(200);
+            actual.Value.Should().Be(expected);
+        }
+
+        [Fact]
+        public async Task Atualizar_deve_gerar_IdNotFoundException_quando_id_invalido()
+        {
+            var expectedException = new IdNotFoundException(nameof(Album));
+
+            _mediatorMock.Setup(mock => mock.Send(It.IsAny<UpdateAlbumCommand>(), It.IsAny<CancellationToken>())).ThrowsAsync(expectedException);
+
+            Func<Task> act = () => _controller.Atualizar(Guid.NewGuid(), AlbumMockHelper.MockAlbumInputDto());
+            await act.Should().ThrowAsync<IdNotFoundException>().WithMessage("Id de Album não localizado");
+        }
+
+        [Fact]
+        public async Task Atualizar_deve_chamar_mediatr_conforme_esperado()
+        {
+            var input = AlbumMockHelper.MockAlbumInputDto();
+            var id = Guid.NewGuid();
+
+            _mediatorMock.Setup(mock => mock.Send(It.IsAny<UpdateAlbumCommand>(), It.IsAny<CancellationToken>())).ReturnsAsync(new UpdateAlbumCommandResponse(AlbumMockHelper.MockAlbumOutputDto()));
+
+            _ = await _controller.Atualizar(id, input);
+
+            _mediatorMock.Verify(mock => mock.Send(It.Is<UpdateAlbumCommand>(command => command.Id == id && command.Album == input), It.IsAny<CancellationToken>()), Times.Once);
+        }
+
+        [Fact]
+        public async Task Excluir_deve_retornar_conforme_esperado()
+        {
+            var expected = "Exclusão realizada com sucesso!";
+            var id = Guid.NewGuid();
+
+            _mediatorMock.Setup(mock => mock.Send(It.IsAny<DeleteAlbumCommand>(), It.IsAny<CancellationToken>())).ReturnsAsync(true);
+
+            var result = await _controller.Excluir(id);
+
+            var actual = result as OkObjectResult;
+
+            actual.StatusCode.Should().Be(200);
+            actual.Value.Should().Be(expected);
+        }
+
+        [Fact]
+        public async Task Excluir_deve_gerar_IdNotFoundException_quando_id_invalido()
+        {
+            var expectedException = new IdNotFoundException(nameof(Album));
+
+            _mediatorMock.Setup(mock => mock.Send(It.IsAny<DeleteAlbumCommand>(), It.IsAny<CancellationToken>())).ThrowsAsync(expectedException);
+
+            Func<Task> act = () => _controller.Excluir(Guid.NewGuid());
+            await act.Should().ThrowAsync<IdNotFoundException>().WithMessage("Id de Album não localizado");
+        }
+
+        [Fact]
+        public async Task Excluir_deve_chamar_mediatr_conforme_esperado()
+        {
+            var id = Guid.NewGuid();
+
+            _mediatorMock.Setup(mock => mock.Send(It.IsAny<DeleteAlbumCommand>(), It.IsAny<CancellationToken>())).ReturnsAsync(true);
+
+            _ = await _controller.Excluir(id);
+
+            _mediatorMock.Verify(mock => mock.Send(It.Is<DeleteAlbumCommand>(command => command.Id == id), It.IsAny<CancellationToken>()), Times.Once);
         }
     }
 }
