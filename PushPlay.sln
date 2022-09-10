@@ -18,7 +18,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PushPlay.Api", "PushPlay.Ap
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PushPlay.Application", "PushPlay.Application\PushPlay.Application.csproj", "{F560814A-2E31-4F6F-BB89-5C82C061D6ED}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PushPlay.Tests", "PushPlay.Tests\PushPlay.Tests.csproj", "{F6BF67E9-88DA-4242-96DA-965D0E52688B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PushPlay.Tests", "PushPlay.Tests\PushPlay.Tests.csproj", "{F6BF67E9-88DA-4242-96DA-965D0E52688B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PushPlayAuthorize.API", "PushPlayAuthorize.API\PushPlayAuthorize.API.csproj", "{77C8AA3B-DEDA-4460-B478-3B9798743711}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +52,10 @@ Global
 		{F6BF67E9-88DA-4242-96DA-965D0E52688B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F6BF67E9-88DA-4242-96DA-965D0E52688B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F6BF67E9-88DA-4242-96DA-965D0E52688B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77C8AA3B-DEDA-4460-B478-3B9798743711}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77C8AA3B-DEDA-4460-B478-3B9798743711}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77C8AA3B-DEDA-4460-B478-3B9798743711}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77C8AA3B-DEDA-4460-B478-3B9798743711}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
