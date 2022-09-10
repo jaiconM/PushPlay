@@ -13,13 +13,15 @@ namespace PushPlay.Tests.Application.AlbumContext.Service
     {
         private Mock<IAlbumRepository> _repositoryMock;
         private Mock<IMapper> _mapperMock;
+        private Mock<IAzureBlobStorage> _storageMock;
         private AlbumService _service;
 
         public AlbumServiceTests()
         {
             _repositoryMock = new Mock<IAlbumRepository>();
             _mapperMock = new Mock<IMapper>();
-            _service = new AlbumService(_repositoryMock.Object, _mapperMock.Object);
+            _storageMock = new Mock<IAzureBlobStorage>();
+            _service = new AlbumService(_repositoryMock.Object, _mapperMock.Object, _storageMock.Object);
         }
 
         [Fact]

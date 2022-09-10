@@ -10,17 +10,33 @@ namespace PushPlay.Application.AlbumContext.Service
     {
         private readonly IAlbumRepository _albumRepository;
         private readonly IMapper _mapper;
+        private readonly IAzureBlobStorage _storage;
 
-        public AlbumService(IAlbumRepository albumRepository, IMapper mapper)
+        public AlbumService(IAlbumRepository albumRepository, IMapper mapper, IAzureBlobStorage storage)
         {
             _albumRepository = albumRepository;
             _mapper = mapper;
+            _storage = storage;
         }
 
         public async Task<AlbumOutputDto> Create(AlbumInputDto dto)
         {
             var album = _mapper.Map<Album>(dto);
 
+            var httpClient = new HttpClient();
+            var response = await httpClient.GetAsync(album.LinkFoto);
+
+            if (response.IsSuccessStatusCode)
+            {
+                using var stream = await response.Content.ReadAsStreamAsync();
+
+                var fileName = $"{Guid.NewGuid()}.jpg";
+
+                var pathStorage = await _storage.UploadFile(fileName, "imagens", stream);
+
+                album.LinkFoto = pathStorage;
+
+            }
             await _albumRepository.Save(album);
 
             return _mapper.Map<AlbumOutputDto>(album);

@@ -18,6 +18,7 @@ namespace PushPlay.Application.Config
             services.AddScoped<IMusicaService, MusicaService>();
             services.AddScoped<IPlayListService, PlayListService>();
             services.AddScoped<IUsuarioService, UsuarioService>();
+            services.AddScoped<IAzureBlobStorage, AzureBlobStorage>();
 
             return services;
         }
