@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
+using PushPlay.Api.Config;
 using PushPlay.Api.Filters;
 using PushPlay.Application.Config;
 using PushPlay.Data.Config;
@@ -32,7 +33,7 @@ builder.Services
     .RegisterRepository(builder.Configuration.GetConnectionString("PushPlayDBConn"));
 
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGenWithJwt();
 
 WebApplication app = builder.Build();
 

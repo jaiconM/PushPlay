@@ -4,6 +4,7 @@ using Moq;
 using PushPlay.Application.AlbumContext.Dto;
 using PushPlay.Application.AlbumContext.Service;
 using PushPlay.CrossCutting.Exceptions;
+using PushPlay.Data.AzureBlobStorageHelper;
 using PushPlay.Domain.AlbumContext;
 using PushPlay.Domain.AlbumContext.Repository;
 
@@ -11,10 +12,10 @@ namespace PushPlay.Tests.Application.AlbumContext.Service
 {
     public class AlbumServiceTests
     {
-        private Mock<IAlbumRepository> _repositoryMock;
-        private Mock<IMapper> _mapperMock;
-        private Mock<IAzureBlobStorage> _storageMock;
-        private AlbumService _service;
+        private readonly Mock<IAlbumRepository> _repositoryMock;
+        private readonly Mock<IMapper> _mapperMock;
+        private readonly Mock<IAzureBlobStorage> _storageMock;
+        private readonly AlbumService _service;
 
         public AlbumServiceTests()
         {
@@ -27,17 +28,19 @@ namespace PushPlay.Tests.Application.AlbumContext.Service
         [Fact]
         public async Task GetAll_deve_retornar_conforme_esperado()
         {
-            var expected = new List<AlbumOutputDto>{
+            List<AlbumOutputDto> expected = new()
+            {
                 AlbumMockHelper.MockAlbumOutputDto()
             };
-            var albuns = new List<Album>{
+            List<Album> albuns = new()
+            {
                 new Album(expected.ElementAt(0).Nome, new Musica { Id = Guid.NewGuid() })
             };
 
             _repositoryMock.Setup(mock => mock.GetAllWithIncludes()).ReturnsAsync(albuns);
             _mapperMock.Setup(mock => mock.Map<List<AlbumOutputDto>>(albuns)).Returns(expected);
 
-            var actual = await _service.GetAll();
+            List<AlbumOutputDto> actual = await _service.GetAll();
 
             actual.Should().BeEquivalentTo(expected);
         }
@@ -45,14 +48,17 @@ namespace PushPlay.Tests.Application.AlbumContext.Service
         [Fact]
         public async Task Create_deve_retornar_conforme_esperado()
         {
-            var input = AlbumMockHelper.MockAlbumInputDto();
-            var expected = AlbumMockHelper.MockAlbumOutputDto();
-            var album = new Album(input.Nome, new Musica { Id = Guid.NewGuid() });
+            AlbumInputDto input = AlbumMockHelper.MockAlbumInputDto();
+            AlbumOutputDto expected = AlbumMockHelper.MockAlbumOutputDto();
+            Album album = new(input.Nome, new Musica { Id = Guid.NewGuid() })
+            {
+                LinkFoto = "https://sienaconstruction.com/wp-content/uploads/2017/05/test-image.jpg"
+            };
 
             _mapperMock.Setup(mock => mock.Map<Album>(input)).Returns(album);
             _mapperMock.Setup(mock => mock.Map<AlbumOutputDto>(album)).Returns(expected);
 
-            var actual = await _service.Create(input);
+            AlbumOutputDto actual = await _service.Create(input);
 
             actual.Should().BeEquivalentTo(expected);
 
@@ -61,15 +67,17 @@ namespace PushPlay.Tests.Application.AlbumContext.Service
         [Fact]
         public async Task Create_deve_chamar_repositorio_conforme_esperado()
         {
-            var input = AlbumMockHelper.MockAlbumInputDto();
-            var expected = AlbumMockHelper.MockAlbumOutputDto();
-            var album = new Album(input.Nome, new Musica { Id = Guid.NewGuid() })
+            AlbumInputDto input = AlbumMockHelper.MockAlbumInputDto();
+            AlbumOutputDto expected = AlbumMockHelper.MockAlbumOutputDto();
+            Album album = new(input.Nome, new Musica { Id = Guid.NewGuid() })
             {
-                Id = expected.Id
+                Id = expected.Id,
+                LinkFoto = "https://sienaconstruction.com/wp-content/uploads/2017/05/test-image.jpg"
             };
 
             _mapperMock.Setup(mock => mock.Map<Album>(input)).Returns(album);
             _mapperMock.Setup(mock => mock.Map<AlbumOutputDto>(album)).Returns(expected);
+            _storageMock.Setup(mock => mock.UploadFile(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<Stream>())).ReturnsAsync(album.LinkFoto);
 
             _ = await _service.Create(input);
 

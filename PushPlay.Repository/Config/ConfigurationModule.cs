@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using PushPlay.Data.AzureBlobStorageHelper;
 using PushPlay.Data.Contexto;
 using PushPlay.Data.Database;
 using PushPlay.Data.Repository;
@@ -21,6 +22,7 @@ namespace PushPlay.Data.Config
             services.AddScoped<IArtistaRepository, ArtistaRepository>();
             services.AddScoped<IPlayListRepository, PlayListRepository>();
             services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+            services.AddScoped<IAzureBlobStorage, AzureBlobStorage>();
 
             return services;
         }

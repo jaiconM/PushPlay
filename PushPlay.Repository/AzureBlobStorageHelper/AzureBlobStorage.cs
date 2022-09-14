@@ -1,7 +1,7 @@
 ﻿using Azure.Storage.Blobs;
 using Microsoft.Extensions.Configuration;
 
-namespace PushPlay.Application.AlbumContext.Service
+namespace PushPlay.Data.AzureBlobStorageHelper
 {
     public class AzureBlobStorage : IAzureBlobStorage
     {
@@ -14,7 +14,7 @@ namespace PushPlay.Application.AlbumContext.Service
 
         public async Task<string> UploadFile(string fileName, string directory, Stream buffer)
         {
-            var client = new BlobServiceClient(_configuration["BlobStorageConnection"]);
+            BlobServiceClient client = new(_configuration["BlobStorageConnection"]);
             BlobContainerClient container;
 
             container = client.GetBlobContainerClient(directory);

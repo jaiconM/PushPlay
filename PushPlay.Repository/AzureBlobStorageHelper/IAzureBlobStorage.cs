@@ -1,4 +1,4 @@
-﻿namespace PushPlay.Application.AlbumContext.Service
+﻿namespace PushPlay.Data.AzureBlobStorageHelper
 {
     public interface IAzureBlobStorage
     {

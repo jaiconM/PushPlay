@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using PushPlay.Application.AlbumContext.Dto;
 using PushPlay.CrossCutting.Exceptions;
+using PushPlay.Data.AzureBlobStorageHelper;
 using PushPlay.Domain.AlbumContext;
 using PushPlay.Domain.AlbumContext.Repository;
 
@@ -21,22 +22,10 @@ namespace PushPlay.Application.AlbumContext.Service
 
         public async Task<AlbumOutputDto> Create(AlbumInputDto dto)
         {
-            var album = _mapper.Map<Album>(dto);
+            Album album = _mapper.Map<Album>(dto);
 
-            var httpClient = new HttpClient();
-            var response = await httpClient.GetAsync(album.LinkFoto);
+            await TrateFoto(album);
 
-            if (response.IsSuccessStatusCode)
-            {
-                using var stream = await response.Content.ReadAsStreamAsync();
-
-                var fileName = $"{Guid.NewGuid()}.jpg";
-
-                var pathStorage = await _storage.UploadFile(fileName, "imagens", stream);
-
-                album.LinkFoto = pathStorage;
-
-            }
             await _albumRepository.Save(album);
 
             return _mapper.Map<AlbumOutputDto>(album);
@@ -44,27 +33,27 @@ namespace PushPlay.Application.AlbumContext.Service
 
         public async Task<List<AlbumOutputDto>> GetAll()
         {
-            var result = await _albumRepository.GetAllWithIncludes();
+            IEnumerable<Album> result = await _albumRepository.GetAllWithIncludes();
 
             return _mapper.Map<List<AlbumOutputDto>>(result);
         }
 
         public async Task<AlbumOutputDto> GetById(Guid id)
         {
-            var entity = await _albumRepository.Get(id);
-            if (entity == null)
-                throw new IdNotFoundException(nameof(Album));
-
-            return _mapper.Map<AlbumOutputDto>(entity);
+            Album? entity = await _albumRepository.Get(id);
+            return entity == null ? throw new IdNotFoundException(nameof(Album)) : _mapper.Map<AlbumOutputDto>(entity);
         }
 
         public async Task<AlbumOutputDto> Update(Guid id, AlbumInputDto dto)
         {
-            var entity = await _albumRepository.Get(id);
+            Album? entity = await _albumRepository.Get(id);
             if (entity == null)
                 throw new IdNotFoundException(nameof(Album));
 
             entity = _mapper.Map(dto, entity);
+
+            await TrateFoto(entity);
+
             await _albumRepository.Update(entity);
 
             return _mapper.Map<AlbumOutputDto>(entity);
@@ -72,7 +61,7 @@ namespace PushPlay.Application.AlbumContext.Service
 
         public async Task<bool> Delete(Guid id)
         {
-            var entity = await _albumRepository.Get(id);
+            Album? entity = await _albumRepository.Get(id);
             if (entity == null)
                 throw new IdNotFoundException(nameof(Album));
 
@@ -81,5 +70,21 @@ namespace PushPlay.Application.AlbumContext.Service
             return true;
         }
 
+        private async Task TrateFoto(Album album)
+        {
+            HttpClient httpClient = new();
+            HttpResponseMessage response = await httpClient.GetAsync(album.LinkFoto);
+
+            if (response.IsSuccessStatusCode)
+            {
+                using Stream stream = await response.Content.ReadAsStreamAsync();
+
+                var fileName = $"{Guid.NewGuid()}.jpg";
+
+                var pathStorage = await _storage.UploadFile(fileName, "imagens", stream);
+
+                album.LinkFoto = pathStorage;
+            }
+        }
     }
 }

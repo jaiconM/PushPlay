@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using PushPlay.Application.ContaContext.Dto;
 using PushPlay.CrossCutting.Exceptions;
+using PushPlay.Data.AzureBlobStorageHelper;
 using PushPlay.Domain.ContaContext;
 using PushPlay.Domain.ContaContext.Repository;
 
@@ -10,11 +11,13 @@ namespace PushPlay.Application.ContaContext.Service
     {
         private readonly IUsuarioRepository _usuarioRepository;
         private readonly IMapper _mapper;
+        private readonly IAzureBlobStorage _storage;
 
-        public UsuarioService(IUsuarioRepository usuarioRepository, IMapper mapper)
+        public UsuarioService(IUsuarioRepository usuarioRepository, IMapper mapper, IAzureBlobStorage storage)
         {
             _usuarioRepository = usuarioRepository;
             _mapper = mapper;
+            _storage = storage;
         }
 
         public async Task<UsuarioOutputDto> Create(UsuarioInputDto dto)
@@ -22,6 +25,8 @@ namespace PushPlay.Application.ContaContext.Service
             Usuario usuario = _mapper.Map<Usuario>(dto);
 
             usuario.Validate();
+
+            await TrateFoto(usuario);
 
             await _usuarioRepository.Save(usuario);
 
@@ -51,6 +56,8 @@ namespace PushPlay.Application.ContaContext.Service
 
             entity.Validate();
 
+            await TrateFoto(entity);
+
             await _usuarioRepository.Update(entity);
 
             return _mapper.Map<UsuarioOutputDto>(entity);
@@ -70,6 +77,23 @@ namespace PushPlay.Application.ContaContext.Service
         public async Task<bool> Autentique(string email, string senha)
         {
             return await _usuarioRepository.Autentique(email, senha);
+        }
+
+        private async Task TrateFoto(Usuario usuario)
+        {
+            HttpClient httpClient = new();
+            HttpResponseMessage response = await httpClient.GetAsync(usuario.LinkFoto);
+
+            if (response.IsSuccessStatusCode)
+            {
+                using Stream stream = await response.Content.ReadAsStreamAsync();
+
+                var fileName = $"{Guid.NewGuid()}.jpg";
+
+                var pathStorage = await _storage.UploadFile(fileName, "imagens", stream);
+
+                usuario.LinkFoto = pathStorage;
+            }
         }
     }
 }
