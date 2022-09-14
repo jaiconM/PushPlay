@@ -19,7 +19,7 @@ namespace PushPlay.Application.ContaContext.Service
 
         public async Task<UsuarioOutputDto> Create(UsuarioInputDto dto)
         {
-            var usuario = _mapper.Map<Usuario>(dto);
+            Usuario usuario = _mapper.Map<Usuario>(dto);
 
             usuario.Validate();
 
@@ -30,23 +30,20 @@ namespace PushPlay.Application.ContaContext.Service
 
         public async Task<List<UsuarioOutputDto>> GetAll()
         {
-            var result = await _usuarioRepository.GetAll();
+            IEnumerable<Usuario> result = await _usuarioRepository.GetAll();
 
             return _mapper.Map<List<UsuarioOutputDto>>(result);
         }
 
         public async Task<UsuarioOutputDto> GetById(Guid id)
         {
-            var entity = await _usuarioRepository.Get(id);
-            if (entity == null)
-                throw new IdNotFoundException(nameof(Usuario));
-
-            return _mapper.Map<UsuarioOutputDto>(entity);
+            Usuario? entity = await _usuarioRepository.Get(id);
+            return entity == null ? throw new IdNotFoundException(nameof(Usuario)) : _mapper.Map<UsuarioOutputDto>(entity);
         }
 
         public async Task<UsuarioOutputDto> Update(Guid id, UsuarioInputDto dto)
         {
-            var entity = await _usuarioRepository.Get(id);
+            Usuario? entity = await _usuarioRepository.Get(id);
             if (entity == null)
                 throw new IdNotFoundException(nameof(Usuario));
 
@@ -61,13 +58,18 @@ namespace PushPlay.Application.ContaContext.Service
 
         public async Task<bool> Delete(Guid id)
         {
-            var entity = await _usuarioRepository.Get(id);
+            Usuario? entity = await _usuarioRepository.Get(id);
             if (entity == null)
                 throw new IdNotFoundException(nameof(Usuario));
 
             await _usuarioRepository.Delete(entity);
 
             return true;
+        }
+
+        public async Task<bool> Autentique(string email, string senha)
+        {
+            return await _usuarioRepository.Autentique(email, senha);
         }
     }
 }

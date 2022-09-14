@@ -9,6 +9,7 @@ namespace PushPlay.Application.ContaContext.Handler
                                   IRequestHandler<GetAllUsuarioQuery, GetAllUsuarioQueryResponse>,
                                   IRequestHandler<GetByIdUsuarioQuery, GetByIdUsuarioQueryResponse>,
                                   IRequestHandler<UpdateUsuarioCommand, UpdateUsuarioCommandResponse>,
+                                  IRequestHandler<AutenticateUsuarioQuery, bool>,
                                   IRequestHandler<DeleteUsuarioCommand, bool>
     {
         private readonly IUsuarioService _usuarioService;
@@ -20,25 +21,25 @@ namespace PushPlay.Application.ContaContext.Handler
 
         public async Task<CreateUsuarioCommandResponse> Handle(CreateUsuarioCommand request, CancellationToken cancellationToken)
         {
-            var result = await _usuarioService.Create(request.Usuario);
+            Dto.UsuarioOutputDto result = await _usuarioService.Create(request.Usuario);
             return new CreateUsuarioCommandResponse(result);
         }
 
         public async Task<GetAllUsuarioQueryResponse> Handle(GetAllUsuarioQuery request, CancellationToken cancellationToken)
         {
-            var result = await _usuarioService.GetAll();
+            List<Dto.UsuarioOutputDto> result = await _usuarioService.GetAll();
             return new GetAllUsuarioQueryResponse(result);
         }
 
         public async Task<GetByIdUsuarioQueryResponse> Handle(GetByIdUsuarioQuery request, CancellationToken cancellationToken)
         {
-            var result = await _usuarioService.GetById(request.Id);
+            Dto.UsuarioOutputDto result = await _usuarioService.GetById(request.Id);
             return new GetByIdUsuarioQueryResponse(result);
         }
 
         public async Task<UpdateUsuarioCommandResponse> Handle(UpdateUsuarioCommand request, CancellationToken cancellationToken)
         {
-            var result = await _usuarioService.Update(request.Id, request.Usuario);
+            Dto.UsuarioOutputDto result = await _usuarioService.Update(request.Id, request.Usuario);
             return new UpdateUsuarioCommandResponse(result);
         }
 
@@ -47,5 +48,9 @@ namespace PushPlay.Application.ContaContext.Handler
             return await _usuarioService.Delete(request.Id);
         }
 
+        public async Task<bool> Handle(AutenticateUsuarioQuery request, CancellationToken cancellationToken)
+        {
+            return await _usuarioService.Autentique(request.Email, request.Senha);
+        }
     }
 }

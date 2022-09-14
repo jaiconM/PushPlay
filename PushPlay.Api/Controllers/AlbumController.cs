@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PushPlay.Application.AlbumContext.Dto;
 using PushPlay.Application.AlbumContext.Handler.Command;
@@ -8,6 +9,7 @@ namespace PushPlay.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class AlbumController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -20,28 +22,28 @@ namespace PushPlay.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> ListarTodos()
         {
-            var resut = await _mediator.Send(new GetAllAlbumQuery());
+            GetAllAlbumQueryResponse resut = await _mediator.Send(new GetAllAlbumQuery());
             return Ok(resut.Albums);
         }
 
         [HttpPost]
         public async Task<IActionResult> Criar(AlbumInputDto dto)
         {
-            var result = await _mediator.Send(new CreateAlbumCommand(dto));
+            CreateAlbumCommandResponse result = await _mediator.Send(new CreateAlbumCommand(dto));
             return Created($"{result.Album.Id}", result.Album);
         }
 
         [HttpGet("ListarPorId/{id}")]
         public async Task<IActionResult> ListarPorId(Guid id)
         {
-            var result = await _mediator.Send(new GetByIdAlbumQuery(id));
+            GetByIdAlbumQueryResponse result = await _mediator.Send(new GetByIdAlbumQuery(id));
             return Ok(result.Album);
         }
 
         [HttpPut("Atualizar/{id}")]
         public async Task<IActionResult> Atualizar(Guid id, AlbumInputDto dto)
         {
-            var result = await _mediator.Send(new UpdateAlbumCommand(id, dto));
+            UpdateAlbumCommandResponse result = await _mediator.Send(new UpdateAlbumCommand(id, dto));
             return Ok(result.Album);
         }
 

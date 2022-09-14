@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PushPlay.Application.AlbumContext.Dto;
 using PushPlay.Application.AlbumContext.Handler.Command;
@@ -8,6 +9,7 @@ namespace PushPlay.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class EstiloMusicalController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -20,28 +22,28 @@ namespace PushPlay.Api.Controllers
         [HttpGet("ListarTodos")]
         public async Task<IActionResult> ListarTodos()
         {
-            var result = await _mediator.Send(new GetAllEstiloMusicalQuery());
+            GetAllEstiloMusicalQueryResponse result = await _mediator.Send(new GetAllEstiloMusicalQuery());
             return Ok(result.EstilosMusicais);
         }
 
         [HttpPost("Criar")]
         public async Task<IActionResult> Criar(EstiloMusicalInputDto dto)
         {
-            var result = await _mediator.Send(new CreateEstiloMusicalCommand(dto));
+            CreateEstiloMusicalCommandResponse result = await _mediator.Send(new CreateEstiloMusicalCommand(dto));
             return Created($"{result.EstiloMusical.Id}", result.EstiloMusical);
         }
 
         [HttpGet("ListarPorId/{id}")]
         public async Task<IActionResult> ListarPorId(Guid id)
         {
-            var result = await _mediator.Send(new GetByIdEstiloMusicalQuery(id));
+            GetByIdEstiloMusicalQueryResponse result = await _mediator.Send(new GetByIdEstiloMusicalQuery(id));
             return Ok(result.EstiloMusical);
         }
 
         [HttpPut("Atualizar/{id}")]
         public async Task<IActionResult> Atualizar(Guid id, EstiloMusicalInputDto dto)
         {
-            var result = await _mediator.Send(new UpdateEstiloMusicalCommand(id, dto));
+            UpdateEstiloMusicalCommandResponse result = await _mediator.Send(new UpdateEstiloMusicalCommand(id, dto));
             return Ok(result.EstiloMusical);
         }
 

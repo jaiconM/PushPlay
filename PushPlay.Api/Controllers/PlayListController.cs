@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PushPlay.Application.ContaContext.Dto;
 using PushPlay.Application.ContaContext.Handler.Command;
@@ -8,6 +9,7 @@ namespace PushPlay.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class PlayListController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -20,28 +22,28 @@ namespace PushPlay.Api.Controllers
         [HttpGet("ListarTodas")]
         public async Task<IActionResult> ListarTodas()
         {
-            var result = await _mediator.Send(new GetAllPlayListQuery());
+            GetAllPlayListQueryResponse result = await _mediator.Send(new GetAllPlayListQuery());
             return Ok(result.PlayLists);
         }
 
         [HttpPost("Criar")]
         public async Task<IActionResult> Criar(PlayListInputDto dto)
         {
-            var result = await _mediator.Send(new CreatePlayListCommand(dto));
+            CreatePlayListCommandResponse result = await _mediator.Send(new CreatePlayListCommand(dto));
             return Created($"{result.PlayList.Id}", result.PlayList);
         }
 
         [HttpGet("ListarPorId/{id}")]
         public async Task<IActionResult> ListarPorId(Guid id)
         {
-            var result = await _mediator.Send(new GetByIdPlayListQuery(id));
+            GetByIdPlayListQueryResponse result = await _mediator.Send(new GetByIdPlayListQuery(id));
             return Ok(result.PlayList);
         }
 
         [HttpPut("Atualizar/{id}")]
         public async Task<IActionResult> Atualizar(Guid id, PlayListInputDto dto)
         {
-            var result = await _mediator.Send(new UpdatePlayListCommand(id, dto));
+            UpdatePlayListCommandResponse result = await _mediator.Send(new UpdatePlayListCommand(id, dto));
             return Ok(result.PlayList);
         }
 

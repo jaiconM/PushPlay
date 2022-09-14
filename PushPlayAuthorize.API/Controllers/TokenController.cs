@@ -1,9 +1,9 @@
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using PushPlay.Application.AlbumContext.Dto;
-using PushPlay.Application.AlbumContext.Handler.Command;
-using PushPlay.Application.AlbumContext.Handler.Query;
+using PushPlay.Application.ContaContext.Handler.Query;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 using System.Text;
 
 namespace PushPlayAuthorize.API.Controllers
@@ -12,21 +12,46 @@ namespace PushPlayAuthorize.API.Controllers
     [Route("[controller]")]
     public class TokenController : ControllerBase
     {
-        private readonly string jwtSecret = "segredo";
+        private readonly IConfiguration _configuration;
+        private readonly IMediator _mediator;
 
-        [HttpPost]
-        public async Task<IActionResult> Token(string username, string password)
+        public TokenController(IConfiguration configuration, IMediator mediator)
         {
-            var resut = GerarToken(username, password);
-            return Ok(resut);
+            _configuration = configuration;
+            _mediator = mediator;
         }
 
-        private string GerarToken(string username, string password)
+        [HttpPost]
+        public async Task<IActionResult> Token([FromForm] string email, [FromForm] string senha)
         {
-            var securityKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(jwtSecret));
-            var credentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
+            var autenticado = await _mediator.Send(new AutenticateUsuarioQuery(email, senha));
+            if (autenticado == false)
+                return Unauthorized();
 
-            //ToDo
+            var jwtSecret = _configuration["JwtSecret"];
+            var audience = _configuration["Audience"];
+            var issuer = _configuration["Issuer"];
+            return Ok($"Bearer Token: {GerarToken(jwtSecret, audience, issuer, email)}");
+        }
+
+        private static string GerarToken(string jwtSecret, string audience, string issuer, string email)
+        {
+            SymmetricSecurityKey securityKey = new(Encoding.UTF8.GetBytes(jwtSecret));
+            SigningCredentials credentials = new(securityKey, SecurityAlgorithms.HmacSha256);
+
+            Claim[] claims = new[]
+            {
+                new Claim(JwtRegisteredClaimNames.Email, email),
+                new Claim("role", "User")
+            };
+
+            JwtSecurityToken token = new(issuer,
+               audience,
+               claims,
+               expires: DateTime.Now.AddMinutes(15),
+               signingCredentials: credentials);
+
+            return new JwtSecurityTokenHandler().WriteToken(token);
         }
     }
 }

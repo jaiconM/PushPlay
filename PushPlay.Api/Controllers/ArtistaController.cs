@@ -1,4 +1,5 @@
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PushPlay.Application.AlbumContext.Dto;
 using PushPlay.Application.AlbumContext.Handler.Command;
@@ -8,6 +9,7 @@ namespace PushPlay.Api.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
+    [Authorize]
     public class ArtistaController : ControllerBase
     {
         private readonly IMediator _mediator;
@@ -20,28 +22,28 @@ namespace PushPlay.Api.Controllers
         [HttpGet("ListarTodos")]
         public async Task<IActionResult> ListarTodos()
         {
-            var result = await _mediator.Send(new GetAllArtistaQuery());
+            GetAllArtistaQueryResponse result = await _mediator.Send(new GetAllArtistaQuery());
             return Ok(result.Artistas);
         }
 
         [HttpPost("Criar")]
         public async Task<IActionResult> Criar(ArtistaInputDto dto)
         {
-            var result = await _mediator.Send(new CreateArtistaCommand(dto));
+            CreateArtistaCommandResponse result = await _mediator.Send(new CreateArtistaCommand(dto));
             return Created($"{result.Artista.Id}", result.Artista);
         }
 
         [HttpGet("ListarPorId/{id}")]
         public async Task<IActionResult> ListarPorId(Guid id)
         {
-            var result = await _mediator.Send(new GetByIdArtistaQuery(id));
+            GetByIdArtistaQueryResponse result = await _mediator.Send(new GetByIdArtistaQuery(id));
             return Ok(result.Artista);
         }
 
         [HttpPut("Atualizar/{id}")]
         public async Task<IActionResult> Atualizar(Guid id, ArtistaInputDto dto)
         {
-            var result = await _mediator.Send(new UpdateArtistaCommand(id, dto));
+            UpdateArtistaCommandResponse result = await _mediator.Send(new UpdateArtistaCommand(id, dto));
             return Ok(result.Artista);
         }
 
