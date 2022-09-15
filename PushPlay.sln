@@ -8,6 +8,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{6963FF25-EB96-4246-BE2F-B14236B150E4}"
 	ProjectSection(SolutionItems) = preProject
 		.editorconfig = .editorconfig
+		C:\Users\Jaicon\Downloads\Diagrama de Publicacao no Azure.png = C:\Users\Jaicon\Downloads\Diagrama de Publicacao no Azure.png
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PushPlay.CrossCutting", "PushPlay.CrossCutting\PushPlay.CrossCutting.csproj", "{FE0457B0-6E52-43CF-939A-74D522197391}"
@@ -20,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PushPlay.Application", "Pus
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PushPlay.Tests", "PushPlay.Tests\PushPlay.Tests.csproj", "{F6BF67E9-88DA-4242-96DA-965D0E52688B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PushPlayAuthorize.API", "PushPlayAuthorize.API\PushPlayAuthorize.API.csproj", "{77C8AA3B-DEDA-4460-B478-3B9798743711}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PushPlayAuthorize.API", "PushPlayAuthorize.API\PushPlayAuthorize.API.csproj", "{77C8AA3B-DEDA-4460-B478-3B9798743711}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
