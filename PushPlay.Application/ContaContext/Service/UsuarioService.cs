@@ -22,7 +22,7 @@ namespace PushPlay.Application.ContaContext.Service
 
         public async Task<UsuarioOutputDto> Create(UsuarioInputDto dto)
         {
-            Usuario usuario = _mapper.Map<Usuario>(dto);
+            var usuario = _mapper.Map<Usuario>(dto);
 
             usuario.Validate();
 
@@ -35,20 +35,20 @@ namespace PushPlay.Application.ContaContext.Service
 
         public async Task<List<UsuarioOutputDto>> GetAll()
         {
-            IEnumerable<Usuario> result = await _usuarioRepository.GetAll();
+            var result = await _usuarioRepository.GetAll();
 
             return _mapper.Map<List<UsuarioOutputDto>>(result);
         }
 
         public async Task<UsuarioOutputDto> GetById(Guid id)
         {
-            Usuario? entity = await _usuarioRepository.Get(id);
+            var entity = await _usuarioRepository.Get(id);
             return entity == null ? throw new IdNotFoundException(nameof(Usuario)) : _mapper.Map<UsuarioOutputDto>(entity);
         }
 
         public async Task<UsuarioOutputDto> Update(Guid id, UsuarioInputDto dto)
         {
-            Usuario? entity = await _usuarioRepository.Get(id);
+            var entity = await _usuarioRepository.Get(id);
             if (entity == null)
                 throw new IdNotFoundException(nameof(Usuario));
 
@@ -65,7 +65,7 @@ namespace PushPlay.Application.ContaContext.Service
 
         public async Task<bool> Delete(Guid id)
         {
-            Usuario? entity = await _usuarioRepository.Get(id);
+            var entity = await _usuarioRepository.Get(id);
             if (entity == null)
                 throw new IdNotFoundException(nameof(Usuario));
 
@@ -82,11 +82,11 @@ namespace PushPlay.Application.ContaContext.Service
         private async Task TrateFoto(Usuario usuario)
         {
             HttpClient httpClient = new();
-            HttpResponseMessage response = await httpClient.GetAsync(usuario.LinkFoto);
+            var response = await httpClient.GetAsync(usuario.LinkFoto);
 
             if (response.IsSuccessStatusCode)
             {
-                using Stream stream = await response.Content.ReadAsStreamAsync();
+                using var stream = await response.Content.ReadAsStreamAsync();
 
                 var fileName = $"{Guid.NewGuid()}.jpg";
 

@@ -2,7 +2,6 @@
 using PushPlay.Application.AlbumContext.Handler.Command;
 using PushPlay.Application.AlbumContext.Handler.Query;
 using PushPlay.Application.AlbumContext.Service;
-using PushPlay.Application.ContaContext.Handler.Command;
 
 namespace PushPlay.Application.AlbumContext.Handler
 {

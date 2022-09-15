@@ -22,28 +22,28 @@ namespace PushPlay.Api.Controllers
         [HttpGet("ListarTodas")]
         public async Task<IActionResult> ListarTodas()
         {
-            GetAllMusicaQueryResponse result = await _mediator.Send(new GetAllMusicaQuery());
+            var result = await _mediator.Send(new GetAllMusicaQuery());
             return Ok(result.Musicas);
         }
 
         [HttpPost("Criar")]
         public async Task<IActionResult> Criar(MusicaInputDto dto)
         {
-            CreateMusicaCommandResponse result = await _mediator.Send(new CreateMusicaCommand(dto));
+            var result = await _mediator.Send(new CreateMusicaCommand(dto));
             return Created($"{result.Musica.Id}", result.Musica);
         }
 
         [HttpGet("ListarPorId/{id}")]
         public async Task<IActionResult> ListarPorId(Guid id)
         {
-            GetByIdMusicaQueryResponse result = await _mediator.Send(new GetByIdMusicaQuery(id));
+            var result = await _mediator.Send(new GetByIdMusicaQuery(id));
             return Ok(result.Musica);
         }
 
         [HttpPut("Atualizar/{id}")]
         public async Task<IActionResult> Atualizar(Guid id, MusicaInputDto dto)
         {
-            UpdateMusicaCommandResponse result = await _mediator.Send(new UpdateMusicaCommand(id, dto));
+            var result = await _mediator.Send(new UpdateMusicaCommand(id, dto));
             return Ok(result.Musica);
         }
 

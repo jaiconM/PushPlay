@@ -3,7 +3,7 @@ using PushPlay.Application.AlbumContext.Handler.Command;
 using PushPlay.Application.AlbumContext.Handler.Query;
 using PushPlay.Application.AlbumContext.Service;
 
-namespace PushPlay.Application.MusicaContext.Handler
+namespace PushPlay.Application.AlbumContext.Handler
 {
     public class MusicaHandler : IRequestHandler<CreateMusicaCommand, CreateMusicaCommandResponse>,
                                  IRequestHandler<GetAllMusicaQuery, GetAllMusicaQueryResponse>,

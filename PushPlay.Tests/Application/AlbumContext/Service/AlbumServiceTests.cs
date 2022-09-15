@@ -40,7 +40,7 @@ namespace PushPlay.Tests.Application.AlbumContext.Service
             _repositoryMock.Setup(mock => mock.GetAllWithIncludes()).ReturnsAsync(albuns);
             _mapperMock.Setup(mock => mock.Map<List<AlbumOutputDto>>(albuns)).Returns(expected);
 
-            List<AlbumOutputDto> actual = await _service.GetAll();
+            var actual = await _service.GetAll();
 
             actual.Should().BeEquivalentTo(expected);
         }
@@ -48,8 +48,8 @@ namespace PushPlay.Tests.Application.AlbumContext.Service
         [Fact]
         public async Task Create_deve_retornar_conforme_esperado()
         {
-            AlbumInputDto input = AlbumMockHelper.MockAlbumInputDto();
-            AlbumOutputDto expected = AlbumMockHelper.MockAlbumOutputDto();
+            var input = AlbumMockHelper.MockAlbumInputDto();
+            var expected = AlbumMockHelper.MockAlbumOutputDto();
             Album album = new(input.Nome, new Musica { Id = Guid.NewGuid() })
             {
                 LinkFoto = "https://sienaconstruction.com/wp-content/uploads/2017/05/test-image.jpg"
@@ -58,7 +58,7 @@ namespace PushPlay.Tests.Application.AlbumContext.Service
             _mapperMock.Setup(mock => mock.Map<Album>(input)).Returns(album);
             _mapperMock.Setup(mock => mock.Map<AlbumOutputDto>(album)).Returns(expected);
 
-            AlbumOutputDto actual = await _service.Create(input);
+            var actual = await _service.Create(input);
 
             actual.Should().BeEquivalentTo(expected);
 
@@ -67,8 +67,8 @@ namespace PushPlay.Tests.Application.AlbumContext.Service
         [Fact]
         public async Task Create_deve_chamar_repositorio_conforme_esperado()
         {
-            AlbumInputDto input = AlbumMockHelper.MockAlbumInputDto();
-            AlbumOutputDto expected = AlbumMockHelper.MockAlbumOutputDto();
+            var input = AlbumMockHelper.MockAlbumInputDto();
+            var expected = AlbumMockHelper.MockAlbumOutputDto();
             Album album = new(input.Nome, new Musica { Id = Guid.NewGuid() })
             {
                 Id = expected.Id,

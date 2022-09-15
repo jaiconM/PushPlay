@@ -21,10 +21,9 @@
         {
             var duracao = TimeSpan.FromSeconds(Valor);
 
-            if (duracao.TotalHours >= 1)
-                return $"{duracao.Hours}:{duracao.Minutes}:{duracao.Seconds}";
-
-            return $"{duracao.Minutes} min {duracao.Seconds} seg";
+            return duracao.TotalHours >= 1
+                ? $"{duracao.Hours}:{duracao.Minutes}:{duracao.Seconds}"
+                : $"{duracao.Minutes} min {duracao.Seconds} seg";
         }
     }
 }

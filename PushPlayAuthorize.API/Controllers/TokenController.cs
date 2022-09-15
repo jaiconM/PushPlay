@@ -39,7 +39,7 @@ namespace PushPlayAuthorize.API.Controllers
             SymmetricSecurityKey securityKey = new(Encoding.UTF8.GetBytes(jwtSecret));
             SigningCredentials credentials = new(securityKey, SecurityAlgorithms.HmacSha256);
 
-            Claim[] claims = new[]
+            var claims = new[]
             {
                 new Claim(JwtRegisteredClaimNames.Email, email),
                 new Claim("role", "User")

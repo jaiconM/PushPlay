@@ -22,7 +22,7 @@ namespace PushPlay.Application.AlbumContext.Service
 
         public async Task<ArtistaOutputDto> Create(ArtistaInputDto dto)
         {
-            Artista artista = _mapper.Map<Artista>(dto);
+            var artista = _mapper.Map<Artista>(dto);
 
             await TrateFoto(artista);
 
@@ -33,20 +33,20 @@ namespace PushPlay.Application.AlbumContext.Service
 
         public async Task<List<ArtistaOutputDto>> GetAll()
         {
-            IEnumerable<Artista> result = await _artistaRepository.GetAll();
+            var result = await _artistaRepository.GetAll();
 
             return _mapper.Map<List<ArtistaOutputDto>>(result);
         }
 
         public async Task<ArtistaOutputDto> GetById(Guid id)
         {
-            Artista? entity = await _artistaRepository.Get(id);
+            var entity = await _artistaRepository.Get(id);
             return entity == null ? throw new IdNotFoundException(nameof(Artista)) : _mapper.Map<ArtistaOutputDto>(entity);
         }
 
         public async Task<ArtistaOutputDto> Update(Guid id, ArtistaInputDto dto)
         {
-            Artista? entity = await _artistaRepository.Get(id);
+            var entity = await _artistaRepository.Get(id);
             if (entity == null)
                 throw new IdNotFoundException(nameof(Artista));
 
@@ -61,7 +61,7 @@ namespace PushPlay.Application.AlbumContext.Service
 
         public async Task<bool> Delete(Guid id)
         {
-            Artista? entity = await _artistaRepository.Get(id);
+            var entity = await _artistaRepository.Get(id);
             if (entity == null)
                 throw new IdNotFoundException(nameof(Artista));
 
@@ -73,11 +73,11 @@ namespace PushPlay.Application.AlbumContext.Service
         private async Task TrateFoto(Artista artista)
         {
             HttpClient httpClient = new();
-            HttpResponseMessage response = await httpClient.GetAsync(artista.LinkFoto);
+            var response = await httpClient.GetAsync(artista.LinkFoto);
 
             if (response.IsSuccessStatusCode)
             {
-                using Stream stream = await response.Content.ReadAsStreamAsync();
+                using var stream = await response.Content.ReadAsStreamAsync();
 
                 var fileName = $"{Guid.NewGuid()}.jpg";
 

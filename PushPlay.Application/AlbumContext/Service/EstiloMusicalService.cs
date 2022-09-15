@@ -36,10 +36,7 @@ namespace PushPlay.Application.AlbumContext.Service
         public async Task<EstiloMusicalOutputDto> GetById(Guid id)
         {
             var entity = await _estiloMusicalRepository.Get(id);
-            if (entity == null)
-                throw new IdNotFoundException(nameof(EstiloMusical));
-
-            return _mapper.Map<EstiloMusicalOutputDto>(entity);
+            return entity == null ? throw new IdNotFoundException(nameof(EstiloMusical)) : _mapper.Map<EstiloMusicalOutputDto>(entity);
         }
 
         public async Task<EstiloMusicalOutputDto> Update(Guid id, EstiloMusicalInputDto dto)

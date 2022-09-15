@@ -2,7 +2,8 @@
 
 namespace PushPlay.Domain.AlbumContext.Repository
 {
-    public interface IAlbumRepository : IRepository<Album> {
+    public interface IAlbumRepository : IRepository<Album>
+    {
         Task<IEnumerable<Album>> GetAllWithIncludes();
     }
 }

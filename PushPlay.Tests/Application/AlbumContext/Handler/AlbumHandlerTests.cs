@@ -10,8 +10,8 @@ namespace PushPlay.Tests.Application.AlbumContext.Handler
 {
     public class AlbumHandlerTests
     {
-        private Mock<IAlbumService> _serviceMock;
-        private AlbumHandler _handler;
+        private readonly Mock<IAlbumService> _serviceMock;
+        private readonly AlbumHandler _handler;
 
         public AlbumHandlerTests()
         {

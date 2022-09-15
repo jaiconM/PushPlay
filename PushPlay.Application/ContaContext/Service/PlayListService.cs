@@ -36,10 +36,7 @@ namespace PushPlay.Application.ContaContext.Service
         public async Task<PlayListOutputDto> GetById(Guid id)
         {
             var entity = await _playlistRepository.Get(id);
-            if (entity == null)
-                throw new IdNotFoundException(nameof(PlayList));
-
-            return _mapper.Map<PlayListOutputDto>(entity);
+            return entity == null ? throw new IdNotFoundException(nameof(PlayList)) : _mapper.Map<PlayListOutputDto>(entity);
         }
 
         public async Task<PlayListOutputDto> Update(Guid id, PlayListInputDto dto)

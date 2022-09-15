@@ -12,7 +12,7 @@ namespace PushPlay.Data.Repository
 
         public async Task<bool> Autentique(string email, string senha)
         {
-            List<Usuario> usuarios = await Query.Where(usuario => usuario.Email.Valor == email && usuario.Senha.Valor == senha)
+            var usuarios = await Query.Where(usuario => usuario.Email.Valor == email && usuario.Senha.Valor == senha)
                                                 .ToListAsync();
             return usuarios.Any();
         }

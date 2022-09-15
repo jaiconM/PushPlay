@@ -14,8 +14,8 @@ namespace PushPlay.Tests.Api
 {
     public class AlbumControllerTests
     {
-        private Mock<IMediator> _mediatorMock;
-        private AlbumController _controller;
+        private readonly Mock<IMediator> _mediatorMock;
+        private readonly AlbumController _controller;
 
         public AlbumControllerTests()
         {

@@ -3,7 +3,7 @@ using PushPlay.Application.AlbumContext.Handler.Command;
 using PushPlay.Application.AlbumContext.Handler.Query;
 using PushPlay.Application.AlbumContext.Service;
 
-namespace PushPlay.Application.EstiloMusicalContext.Handler
+namespace PushPlay.Application.AlbumContext.Handler
 {
     public class EstiloMusicalHandler : IRequestHandler<CreateEstiloMusicalCommand, CreateEstiloMusicalCommandResponse>,
                                         IRequestHandler<GetAllEstiloMusicalQuery, GetAllEstiloMusicalQueryResponse>,
