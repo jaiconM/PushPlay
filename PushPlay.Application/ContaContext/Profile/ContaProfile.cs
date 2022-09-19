@@ -8,11 +8,11 @@ namespace PushPlay.Application.ContaContext.Profile
         public ContaProfile()
         {
             CreateMap<Usuario, UsuarioOutputDto>()
-                .ForMember(dto => dto.Email, config => config.MapFrom(musica => musica.Email.Valor));
+                .ForMember(dto => dto.Email, config => config.MapFrom(usuario => usuario.Email.Valor));
 
             CreateMap<UsuarioInputDto, Usuario>()
-                .ForPath(musica => musica.Email.Valor, config => config.MapFrom(dto => dto.Email))
-                .ForPath(musica => musica.Senha.Valor, config => config.MapFrom(dto => dto.Senha));
+                .ForPath(usuario => usuario.Email.Valor, config => config.MapFrom(dto => dto.Email))
+                .ForPath(usuario => usuario.Senha.Valor, config => config.MapFrom(dto => dto.Senha));
 
             CreateMap<PlayList, PlayListOutputDto>();
 
